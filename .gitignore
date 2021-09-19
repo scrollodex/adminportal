@@ -1,3 +1,7 @@
+cmd/makepublicyaml/makepublicyaml
+cmd/sdwebadmin/sdwebadmin
+adminportal/adminportal
+
 # Binaries for programs and plugins
 *.exe
 *.exe~

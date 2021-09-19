@@ -1,0 +1,45 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://code.jquery.com/jquery-3.1.0.min.js" type="text/javascript"></script>
+
+  <!-- ZingGrid ] -->
+  <script src="https://cdn.zinggrid.com/zinggrid.min.js"></script>
+
+	<!-- font awesome from BootstrapCDN -->
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<script src="/public/js.cookie.js"></script>
+	<script src="/public/user.js"> </script>
+	<link href="/public/app.css" rel="stylesheet">
+</head>
+<body class="home">
+
+	<div class="container-fluid">
+    <p>Nav: 
+			<a id="qsMainBtn" class="" href="/admin">Main</a>
+      |
+      <a id="qsLogoutBtn" class="" href="/logout">Logout</a></p>
+
+    <p>Edit: 
+			<a id="qsEntBtn" class="" href="/admin/edit/bi/entries">Entries</a>
+      |
+			<a id="qsLocBtn" class="" href="/admin/edit/bi/locations">Locations</a>
+      |
+			<a id="qsCatBtn" class="" href="/admin/edit/bi/catgories">Catgories</a></p>
+
+   <div>thesite={{.site}}</div>
+   <div>thetable={{.table}}</div>
+
+  </div>
+
+  <hr>
+
+  <zing-grid
+    caption="Hello-world"
+    data='{{.data}}'>
+  </zing-grid>
+
+</body>
+</html>
