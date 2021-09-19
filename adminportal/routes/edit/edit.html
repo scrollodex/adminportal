@@ -13,6 +13,7 @@
 	<script src="/public/js.cookie.js"></script>
 	<script src="/public/user.js"> </script>
 	<link href="/public/app.css" rel="stylesheet">
+	<link href="/public/zinggrid.css" rel="stylesheet">
 </head>
 <body class="home">
 
@@ -37,7 +38,11 @@
   <hr>
 
   <zing-grid
-      src="/admin/zingdata/{{.site}}/{{.table}}.json">
+      src="/admin/zingdata/{{.site}}/{{.table}}.json"
+      pager
+      page-size=50
+      >
+        <zg-caption>Hello World</zg-caption>
   </zing-grid>
 
 </body>
