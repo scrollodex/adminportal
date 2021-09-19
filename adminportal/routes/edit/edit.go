@@ -9,6 +9,7 @@ import (
 	"templates"
 
 	"github.com/gorilla/mux"
+	"github.com/scrollodex/scrollodex/reslist"
 )
 
 func EditHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,46 +41,48 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("No such site: %q", site), http.StatusInternalServerError)
 	}
 
-	//dbh := reslist.New(ft.Sprintf("git@scrollodex-github.com:scrollodex/scrollodex-db-%s.git", site))
-	var dbh interface{}
+	dbh, err := reslist.New(fmt.Sprintf("git@scrollodex-github.com:scrollodex/scrollodex-db-%s.git", site))
+	if err != nil {
+		http.Error(w, fmt.Sprintf("CatList failed: %s", err), http.StatusInternalServerError)
+	}
 	var zingdata string
 	switch table {
 
 	case "categories":
-		l := dbh.CategoryList()
+		l, err := dbh.CategoryList()
 		if err != nil {
-			http.Error(w, fmt.Errorf("CatList failed: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("CatList failed: %s", err), http.StatusInternalServerError)
 		}
-		b, err := json.MarshalIndent(l)
+		b, err := json.Marshal(l)
 		if err != nil {
-			http.Error(w, fmt.Errorf("CatJSON failed: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("CatJSON failed: %s", err), http.StatusInternalServerError)
 		}
 		zingdata = string(b)
 
 	case "locations":
-		l := dbh.LocationList()
+		l, err := dbh.LocationList()
 		if err != nil {
-			http.Error(w, fmt.Errorf("LocList failed: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("LocList failed: %s", err), http.StatusInternalServerError)
 		}
-		b, err := json.MarshalIndent(l)
+		b, err := json.Marshal(l)
 		if err != nil {
-			http.Error(w, fmt.Errorf("LocJSON failed: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("LocJSON failed: %s", err), http.StatusInternalServerError)
 		}
 		zingdata = string(b)
 
 	case "entries":
-		l := dbh.EntryList()
+		l, err := dbh.EntryList()
 		if err != nil {
-			http.Error(w, fmt.Errorf("EntList failed: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("EntList failed: %s", err), http.StatusInternalServerError)
 		}
-		b, err := json.MarshalIndent(l)
+		b, err := json.Marshal(l)
 		if err != nil {
-			http.Error(w, fmt.Errorf("EntJSON failed: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("EntJSON failed: %s", err), http.StatusInternalServerError)
 		}
 		zingdata = string(b)
 
 	default:
-		http.Error(w, fmt.Errorf("No such table: %q", table), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("No such table: %q", table), http.StatusInternalServerError)
 	}
 
 	data["data"] = zingdata
