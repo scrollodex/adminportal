@@ -27,17 +27,17 @@
       |
 			<a id="qsLocBtn" class="" href="/admin/edit/bi/locations">Locations</a>
       |
-			<a id="qsCatBtn" class="" href="/admin/edit/bi/catgories">Catgories</a></p>
+			<a id="qsCatBtn" class="" href="/admin/edit/bi/categories">Categories</a></p>
 
-   <div>thesite={{.site}}</div>
-   <div>thetable={{.table}}</div>
+   <div>thesite={{.Site}}</div>
+   <div>thetable={{.Table}}</div>
 
   </div>
 
   <hr>
 
   <zing-grid
-      src="/admin/zingdata/{{.site}}/{{.table}}.json">
+      src="/admin/zingdata/{{.Site}}/{{.Table}}.json">
   </zing-grid>
 
 </body>

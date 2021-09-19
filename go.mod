@@ -16,6 +16,7 @@ require (
 	logout v0.0.0
 	middlewares v0.0.0
 	unauthorized v0.0.0
+	zingdata v0.0.0
 )
 
 require (
@@ -59,3 +60,5 @@ replace rbac => ./adminportal/rbac
 replace templates => ./adminportal/routes/templates
 
 replace unauthorized => ./adminportal/routes/unauthorized
+
+replace zingdata => ./adminportal/routes/zingdata

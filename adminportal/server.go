@@ -15,6 +15,7 @@ import (
 	"login"
 	"middlewares"
 	"unauthorized"
+	"zingdata"
 )
 
 func StartServer() {
@@ -38,7 +39,12 @@ func StartServer() {
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
 		negroni.Wrap(http.HandlerFunc(edit.EditHandler)),
-	)).Methods("GET", "PUT")
+	)).Methods("GET")
+	r.Handle("/admin/zingdata/{site:[a-z]+}/{table:[a-z]+}.json", negroni.New(
+		negroni.HandlerFunc(middlewares.IsAuthenticated),
+		negroni.HandlerFunc(middlewares.IsRbacEditor),
+		negroni.Wrap(http.HandlerFunc(zingdata.ZingDataHandler)),
+	)).Methods("GET")
 	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public/")))) // static files
 	http.Handle("/", r)
 	log.Print("Server listening on http://localhost:3000/")
