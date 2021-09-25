@@ -7,6 +7,7 @@ require (
 	app v0.0.0
 	callback v0.0.0
 	edit v0.0.0
+	editrow v0.0.0-00010101000000-000000000000
 	github.com/codegangsta/negroni v1.0.0
 	github.com/gorilla/mux v1.8.0
 	golang.org/x/text v0.3.7
@@ -46,6 +47,8 @@ replace auth => ./adminportal/auth
 replace callback => ./adminportal/routes/callback
 
 replace edit => ./adminportal/routes/edit
+
+replace editrow => ./adminportal/routes/editrow
 
 replace home => ./adminportal/routes/home
 

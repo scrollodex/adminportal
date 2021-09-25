@@ -45,14 +45,12 @@
       column-resizable
       column-width="fit"
       compact
-      editor="modal"
-      editor-controls="editor creator"
       filter
       layout
       loading-text="Loading your data"
-      page-size-options="5,10,50,100,2000"
-      page-size=100
       pager
+      page-size-options="50,100,2000"
+      page-size="50"
       search
       sort
       static-menu
@@ -61,7 +59,9 @@
       {{if eq .table "categories" -}}
       <zg-caption>Categories</zg-caption>
       <zg-colgroup>
-        <!-- <zg-column index="ID"></zg-column> -->
+        <zg-column index="id" type="number" filter="disabled" width="80px" header=" " sort="disabled">
+          <span><a href="/admin/editrow/{{.site}}/{{.table}}/[[index.ID]]">EDIT</a></span>
+        </zg-column>
         <zg-column index="name" width="330px" sort-asc></zg-column>
         <zg-column index="description" width="600px"> </zg-column>
         <zg-column index="icon" width="300px"> </zg-column>
@@ -71,6 +71,9 @@
       {{- else if eq .table "locations" -}}
       <zg-caption>Locations</zg-caption>
       <zg-colgroup>
+        <zg-column index="ID" type="number" filter="disabled" width="20px" header=" " sort="disabled">
+          <span><a href="/admin/editrow/{{.site}}/{{.table}}/[[index.ID]]">EDIT</a></span>
+        </zg-column>
         <zg-column index="CountryCode,Region,Comment"
           type="displayLoc"
           header="Will display as..."
@@ -86,7 +89,10 @@
       {{- else if eq .table "entries" -}}
       <zg-caption>Entries</zg-caption>
       <zg-colgroup>
-        <zg-column index="ID" type="number" hidden sort-desc></zg-column>
+        <zg-column index="ID" type="number" sort-desc
+          filter="disabled" width="100px" header=" " sort="disabled">
+          <span><a href="/admin/editrow/{{.site}}/{{.table}}/[[index.ID]]">EDIT</a></span>
+        </zg-column>
         <zg-column index="Status" type="select"
           type-select-options='{{.statuslist}}'
           >
@@ -94,6 +100,7 @@
         <zg-column
           index="Salutation,Firstname,Lastname,Credentials,jobTitle,Company,ShortDesc"
           header="Name"
+          filter="disabled"
           width="200px">
               <span class="character-info--header">
                 <strong>Name:</strong><br>
@@ -122,6 +129,7 @@
         <zg-column
           index="Address,Phone,Phone2,Fax,Email,Email2,Website,Website2"
           header="Contact"
+          filter="disabled"
           width="300px"
           sort="disabled">
               <span>

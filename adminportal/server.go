@@ -1,21 +1,22 @@
 package main
 
 import (
+	"admin"
+	"callback"
 	"edit"
-	"log"
+	"editrow"
+	"home"
+	"login"
 	"logout"
+	"middlewares"
+	"unauthorized"
+	"zingdata"
+
+	"log"
 	"net/http"
 
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
-
-	"admin"
-	"callback"
-	"home"
-	"login"
-	"middlewares"
-	"unauthorized"
-	"zingdata"
 )
 
 func StartServer() {
@@ -35,6 +36,11 @@ func StartServer() {
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
 		negroni.Wrap(http.HandlerFunc(admin.AdminHandler)),
 	))
+	r.Handle("/admin/editrow/{site:[a-z]+}/{table:[a-z]+}/{id:[0-9]+}", negroni.New(
+		negroni.HandlerFunc(middlewares.IsAuthenticated),
+		negroni.HandlerFunc(middlewares.IsRbacEditor),
+		negroni.Wrap(http.HandlerFunc(editrow.EditrowHandler)),
+	)).Methods("GET")
 	r.Handle("/admin/edit/{site:[a-z]+}/{table:[a-z]+}", negroni.New(
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
