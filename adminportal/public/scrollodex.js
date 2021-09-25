@@ -19,3 +19,12 @@ function displayLocRenderer(CountryCode, Region, Comment, cellRef, $cell) {
   return CountryCode + "-" + Region + " (" + Comment + ")";
 }
 ZingGrid.registerCellType("displayLoc", { renderer: displayLocRenderer });
+
+function ellipsisRenderer(str, cellRef, $cell) {
+  num = 300;
+  if (str.length > num) {
+    return str.slice(0, num) + "...";
+  }
+  return str;
+}
+ZingGrid.registerCellType("ellipsis", { renderer: ellipsisRenderer });

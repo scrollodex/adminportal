@@ -16,7 +16,7 @@
 	<link href="/public/app.css" rel="stylesheet">
 	<link href="/public/zinggrid.css" rel="stylesheet">
 </head>
-<body class="home">
+<body class="zg-body">
 
 	<div class="container-fluid">
     <p>Nav: 
@@ -41,27 +41,28 @@
   <zing-grid
       src="/admin/zingdata/{{.site}}/{{.table}}.json"
       align="left"
-      compact
       column-drag column-drag-action="reorder"
       column-resizable
       column-width="fit"
-      editor-controls="editor"
+      compact
+      editor="modal"
+      editor-controls="editor creator"
+      filter
       layout
-      editor
       loading-text="Loading your data"
-      page-size=100
       page-size-options="5,10,50,100,2000"
+      page-size=100
       pager
       search
-      static-menu
       sort
+      static-menu
       width="80%"
       >
       {{if eq .table "categories" -}}
       <zg-caption>Categories</zg-caption>
       <zg-colgroup>
         <!-- <zg-column index="ID"></zg-column> -->
-        <zg-column index="name" width="330px"></zg-column>
+        <zg-column index="name" width="330px" sort-asc></zg-column>
         <zg-column index="description" width="600px"> </zg-column>
         <zg-column index="icon" width="300px"> </zg-column>
 
@@ -73,7 +74,8 @@
         <zg-column index="CountryCode,Region,Comment"
           type="displayLoc"
           header="Will display as..."
-          width="60px">
+          width="60px"
+          sort-asc>
         </zg-column>
         <!-- <zg-column index="ID"></zg-column> -->
         <zg-column index="CountryCode" width="30px" header="Country"></zg-column>
@@ -84,7 +86,11 @@
       {{- else if eq .table "entries" -}}
       <zg-caption>Entries</zg-caption>
       <zg-colgroup>
-        <!-- <zg-column index="ID"></zg-column> -->
+        <zg-column index="ID" type="number" hidden sort-desc></zg-column>
+        <zg-column index="Status" type="select"
+          type-select-options='{{.statuslist}}'
+          >
+        </zg-column>
         <zg-column
           index="Salutation,Firstname,Lastname,Credentials,jobTitle,Company,ShortDesc"
           header="Name"
@@ -116,7 +122,8 @@
         <zg-column
           index="Address,Phone,Phone2,Fax,Email,Email2,Website,Website2"
           header="Contact"
-          width="300px">
+          width="300px"
+          sort="disabled">
               <span>
                 <strong>Address:</strong><br>[[index.Address]]</span><br>
                 <strong>Phone:</strong><br>[[index.Phone]]</span><br>
@@ -129,13 +136,18 @@
               </span>
         </zg-column>
         <zg-column
-          index="Description,Fees"
-          header="Contact"
-          width="300px">
-              <span>
-                <strong>Description:</strong><br>[[index.Description]]</span><br>
-                <strong>Fees:</strong><br>[[index.Fees]]</span><br>
-              </span>
+          index="Description"
+          header="Description"
+          width="300px"
+          type="ellipsis"
+          sort="disabled">
+        </zg-column>
+        <zg-column
+          index="Fees"
+          header="Fees"
+          type="ellipsis"
+          width="300px"
+          sort="disabled">
         </zg-column>
         <!-- <zg-column index="CategoryID"></zg-column> -->
         <zg-column index="CategoryID" type="select"
@@ -150,7 +162,9 @@
         <zg-column
           index="PrivateAdminNotes,PrivateContactEmail"
           header="Not-For-Publication"
-          width="200px">
+          width="200px"
+          sort="disabled"
+          >
               <span>
                 <strong>Private Contact Email:</strong><br>[[index.PrivateContactEmail]]</span><br>
                 <strong>Private Admin Notes:</strong><br>[[index.PrivateAdminNotes]]</span><br>
@@ -159,7 +173,9 @@
         <zg-column
           index="PrivateLastEditBy,LastEditDate"
           header="Edit Info"
-          width="200px">
+          width="200px"
+          sort="disabled"
+          >
               <span>
                 <strong>Last Update:</strong><br>[[index.LastEditDate]]</span><br>
                 <strong>Last Edited By:</strong><br>[[index.PrivateLastEditBy]]</span><br>

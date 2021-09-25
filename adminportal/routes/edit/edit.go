@@ -74,6 +74,19 @@ func genLocList(dbh reslist.Databaser) (string, error) {
 	return s, nil
 }
 
+func genStatusList() (string, error) {
+	nvl := []nameVal{
+		{Name: "DISABLED", Value: 0},
+		{Name: "active", Value: 1},
+	}
+	b, err := json.MarshalIndent(&nvl, "", "\t")
+	if err != nil {
+		return "", err
+	}
+	s := string(b)
+	return s, nil
+}
+
 func EditHandler(w http.ResponseWriter, r *http.Request) {
 
 	session, err := app.Store.Get(r, "auth-session")
@@ -124,6 +137,12 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("No such table: %q", "loc"), http.StatusInternalServerError)
 	}
 	data["loclist"] = s
+
+	s, err = genStatusList()
+	if err != nil {
+		http.Error(w, fmt.Sprintf("status list: %q", "status"), http.StatusInternalServerError)
+	}
+	data["statuslist"] = s
 
 	templates.RenderTemplate(w, "edit", data)
 }
