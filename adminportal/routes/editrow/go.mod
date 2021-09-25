@@ -5,7 +5,7 @@ go 1.12
 require (
 	app v0.0.0
 	github.com/gorilla/mux v1.8.0
-	github.com/scrollodex/scrollodex v0.0.0-20210925195159-e9dd4f9ea177
+	github.com/gorilla/sessions v1.2.1 // indirect
 	templates v0.0.0
 )
 
