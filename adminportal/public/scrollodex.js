@@ -2,19 +2,20 @@
  * Scrollodex JavaScript
  */
 
-
-function upperRenderer(mRawData, cellRef, $cell) {
-  return mRawData.toUpperCase();
-}
-ZingGrid.registerCellType('upper', { renderer: upperRenderer, });
-
-
 function displayLocRenderer(CountryCode, Region, Comment, cellRef, $cell) {
-  if (Comment != "") {
-    return CountryCode + "-" + Region + " (" + Comment + ")";
-  } else {
+  // This must match dextidy.MakeDisplayLoc. If you change this,
+  // change it too.
+
+  if (CountryCode === "ZZ") {
+    if (Comment === "") {
+      return Region;
+    } else {
+      return Region + " (" + Comment + ")";
+    }
+  }
+  if (Comment === "") {
     return CountryCode + "-" + Region;
   }
+  return CountryCode + "-" + Region + " (" + Comment + ")";
 }
-ZingGrid.registerCellType('displayLoc', { renderer: displayLocRenderer, });
-ZingGrid.registerCellType('upper', { renderer: upperRenderer, });
+ZingGrid.registerCellType("displayLoc", { renderer: displayLocRenderer });

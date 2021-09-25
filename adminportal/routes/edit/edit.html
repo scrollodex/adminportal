@@ -24,6 +24,7 @@
       |
       <a id="qsLogoutBtn" class="" href="/logout">Logout</a>
     </p>
+    <p>Editiing <b>{{.site}} - {{.table}}</b></p>
 
     <p>Edit: 
       <a id="qsEntBtn" class="" href="/admin/edit/{{.site}}/entries">Entries</a>
@@ -32,8 +33,6 @@
       |
       <a id="qsCatBtn" class="" href="/admin/edit/{{.site}}/categories">Categories</a>
     </p>
-    <div>thesite={{.site}}</div> 
-    <div>thetable={{.table}}</div>
 
   </div>
 
@@ -43,12 +42,14 @@
       src="/admin/zingdata/{{.site}}/{{.table}}.json"
       align="left"
       compact
+      column-drag column-drag-action="reorder"
       column-resizable
       column-width="fit"
       editor-controls="editor"
       layout
+      editor
       loading-text="Loading your data"
-      page-size=5
+      page-size=100
       page-size-options="5,10,50,100,2000"
       pager
       search
@@ -72,12 +73,12 @@
         <zg-column index="CountryCode,Region,Comment"
           type="displayLoc"
           header="Will display as..."
-          width="150px">
+          width="60px">
         </zg-column>
         <!-- <zg-column index="ID"></zg-column> -->
-        <zg-column index="CountryCode" width="30px"></zg-column>
-        <zg-column index="Region" width="100px"></zg-column>
-        <zg-column index="Comment" width="300px" header="Comment"></zg-column>
+        <zg-column index="CountryCode" width="30px" header="Country"></zg-column>
+        <zg-column index="Region" width="60px"></zg-column>
+        <zg-column index="Comment" width="100px" header="Comment"></zg-column>
       </zg-colgroup>
 
       {{- else if eq .table "entries" -}}
@@ -136,8 +137,16 @@
                 <strong>Fees:</strong><br>[[index.Fees]]</span><br>
               </span>
         </zg-column>
-        <zg-column index="CategoryID"></zg-column>
-        <zg-column index="LocationID"></zg-column>
+        <!-- <zg-column index="CategoryID"></zg-column> -->
+        <zg-column index="CategoryID" type="select"
+          type-select-options='{{.catlist}}'
+         >
+        </zg-column>
+        <!-- <zg-column index="LocationID"></zg-column> -->
+        <zg-column index="LocationID" type="select"
+          type-select-options='{{.loclist}}'
+         >
+        </zg-column>
         <zg-column
           index="PrivateAdminNotes,PrivateContactEmail"
           header="Not-For-Publication"
