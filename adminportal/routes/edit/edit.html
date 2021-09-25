@@ -88,6 +88,7 @@
 
       {{- else if eq .table "entries" -}}
       <zg-caption>Entries</zg-caption>
+
       <zg-colgroup>
         <zg-column index="ID" type="number" sort-desc
           filter="disabled" width="100px" header=" " sort="disabled">
@@ -168,28 +169,18 @@
          >
         </zg-column>
         <zg-column
-          index="PrivateAdminNotes,PrivateContactEmail"
+          index="private_admin_notes,private_contact_email"
           header="Not-For-Publication"
           width="200px"
           sort="disabled"
           >
               <span>
-                <strong>Private Contact Email:</strong><br>[[index.PrivateContactEmail]]</span><br>
-                <strong>Private Admin Notes:</strong><br>[[index.PrivateAdminNotes]]</span><br>
+                <strong>Last Update:</strong><br>[[index.last_update]]</span><br>
+                <strong>Last Edited By:</strong><br>[[index.private_last_edit_by]]</span><br>
+                <strong>Private Contact Email:</strong><br>[[index.private_contact_email]]</span><br>
+                <strong>Private Admin Notes:</strong><br>[[index.private_admin_notes]]</span><br>
               </span>
         </zg-column>
-        <zg-column
-          index="PrivateLastEditBy,LastEditDate"
-          header="Edit Info"
-          width="200px"
-          sort="disabled"
-          >
-              <span>
-                <strong>Last Update:</strong><br>[[index.LastEditDate]]</span><br>
-                <strong>Last Edited By:</strong><br>[[index.PrivateLastEditBy]]</span><br>
-              </span>
-        </zg-column>
-
       </zg-colgroup>
 
       {{end}}

@@ -9,10 +9,10 @@ type Entry struct {
 	CategoryID          int    `yaml:"category_id"`
 	LocationID          int    `yaml:"location_id"`
 	Status              int    `yaml:"status"` // 0=Inactive, 1=Active
-	LastEditDate        string `yaml:"lastUpdate"`
-	PrivateLastEditBy   string `yaml:"private_last_edit_by"`
-	PrivateAdminNotes   string `yaml:"private_admin_notes"`
-	PrivateContactEmail string `yaml:"private_contact_email"`
+	LastEditDate        string `yaml:"lastUpdate" json:"last_update"`
+	PrivateLastEditBy   string `yaml:"private_last_edit_by" json:"private_last_edit_by"`
+	PrivateAdminNotes   string `yaml:"private_admin_notes" json:"private_admin_notes"`
+	PrivateContactEmail string `yaml:"private_contact_email" json:"private_contact_email"`
 }
 
 // EntryCommon is the common fields among all Entry-like things.
