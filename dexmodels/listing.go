@@ -1,8 +1,7 @@
 package dexmodels
 
-// MainListing represents the yaml output file.
-// It is similar to forhugo.MainListing but
-// uses the dexmodel lists.
+// MainListing represents the yaml output file delivered to Hugo.
+// It is similar to forhugo.MainListing but uses the dexmodel structs.
 type MainListing struct {
 	Categories     []CategoryYAML `yaml:"categories"`
 	Locations      []LocationYAML `yaml:"locations"`

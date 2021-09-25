@@ -1,6 +1,8 @@
 package dexmodels
 
 // Entry represents a single Entry.
+// yaml: Used when reading/writing raw data in the (yaml) database.
+// json: used when generating JSON for ZingGrid.
 type Entry struct {
 	EntryCommon `yaml:",inline"`
 	//
@@ -33,14 +35,3 @@ type EntryCommon struct {
 	Fees        string `yaml:"fees"`        // MarkDown
 	Description string `yaml:"description"` // MarkDown
 }
-
-// func (p *Entry) UnmarshalYAML(bytes []byte) error {
-// 	fmt.Printf("ENTRY YES!!\n")
-// 	log.Fatal("ENTRY YES")
-// 	return nil
-// }
-// func (p *EntryCommon) UnmarshalYAML(bytes []byte) error {
-// 	fmt.Printf("EntryCommon YES!!\n")
-// 	log.Fatal("EntryCommon YES")
-// 	return nil
-// }

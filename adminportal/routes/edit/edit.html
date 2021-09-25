@@ -7,11 +7,12 @@
   <script src="https://cdn.zinggrid.com/zinggrid.min.js"></script>
 
 	<!-- font awesome from BootstrapCDN -->
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 	<script src="/public/js.cookie.js"></script>
 	<script src="/public/user.js"> </script>
+	<script src="/public/scrollodex.js"> </script>
 	<link href="/public/app.css" rel="stylesheet">
 	<link href="/public/zinggrid.css" rel="stylesheet">
 </head>
@@ -21,17 +22,18 @@
     <p>Nav: 
 			<a id="qsMainBtn" class="" href="/admin">Main</a>
       |
-      <a id="qsLogoutBtn" class="" href="/logout">Logout</a></p>
+      <a id="qsLogoutBtn" class="" href="/logout">Logout</a>
+    </p>
 
     <p>Edit: 
-			<a id="qsEntBtn" class="" href="/admin/edit/bi/entries">Entries</a>
+      <a id="qsEntBtn" class="" href="/admin/edit/{{.site}}/entries">Entries</a>
       |
-			<a id="qsLocBtn" class="" href="/admin/edit/bi/locations">Locations</a>
+      <a id="qsLocBtn" class="" href="/admin/edit/{{.site}}/locations">Locations</a>
       |
-			<a id="qsCatBtn" class="" href="/admin/edit/bi/catgories">Catgories</a></p>
-
-   <div>thesite={{.site}}</div>
-   <div>thetable={{.table}}</div>
+      <a id="qsCatBtn" class="" href="/admin/edit/{{.site}}/categories">Categories</a>
+    </p>
+    <div>thesite={{.site}}</div> 
+    <div>thetable={{.table}}</div>
 
   </div>
 
@@ -39,10 +41,72 @@
 
   <zing-grid
       src="/admin/zingdata/{{.site}}/{{.table}}.json"
+      align="left"
+      column-resizable
+      column-width="fit"
+      editor-controls
+      layout
+      page-size=100
       pager
-      page-size=50
+      search
+      sort
+      width="80%"
       >
-        <zg-caption>Hello World</zg-caption>
+      {{if eq .table "categories" -}}
+      <zg-caption>Categories</zg-caption>
+      <zg-colgroup>
+        <!-- <zg-column index="ID"></zg-column> -->
+        <zg-column index="name" width="330px"></zg-column>
+        <zg-column index="description" width="600px"> </zg-column>
+        <zg-column index="icon" width="300px"> </zg-column>
+
+      </zg-colgroup>
+
+      {{- else if eq .table "locations" -}}
+      <zg-caption>Locations</zg-caption>
+      <zg-colgroup>
+        <zg-column index="CountryCode,Region,Comment"
+          type="displayLoc"
+          header="Will display as..."
+          width="150px">
+        </zg-column>
+        <!-- <zg-column index="ID"></zg-column> -->
+        <zg-column index="CountryCode" width="30px"></zg-column>
+        <zg-column index="Region" width="100px"></zg-column>
+        <zg-column index="Comment" width="300px" header="Comment"></zg-column>
+      </zg-colgroup>
+
+      {{- else if eq .table "entries" -}}
+      <zg-caption>Entries</zg-caption>
+
+      <zg-colgroup>
+        <!-- <zg-column index="ID"></zg-column> -->
+        <zg-column index="Salutation" header="Sal"></zg-column>
+        <zg-column index="Firstname"></zg-column>
+        <zg-column index="Lastname"></zg-column>
+        <zg-column index="Credentials"></zg-column>
+        <zg-column index="jobTitle"></zg-column>
+        <zg-column index="Company"></zg-column>
+        <zg-column index="ShortDesc"></zg-column>
+        <zg-column index="Phone"></zg-column>
+        <zg-column index="Fax" header="FXXX"></zg-column>
+        <zg-column index="Address"></zg-column>
+        <zg-column index="Email"></zg-column>
+        <zg-column index="Email2"></zg-column>
+        <zg-column index="Website"></zg-column>
+        <zg-column index="Website2"></zg-column>
+        <zg-column index="Fees"></zg-column>
+        <zg-column index="Description"></zg-column>
+        <zg-column index="CategoryID"></zg-column>
+        <zg-column index="LocationID"></zg-column>
+        <zg-column index="Status"></zg-column>
+        <zg-column index="LastEditDate"></zg-column>
+        <zg-column index="PrivateLastEditBy"></zg-column>
+        <zg-column index="PrivateAdminNotes"></zg-column>
+        <zg-column index="PrivateContactEmail"></zg-column>
+      </zg-colgroup>
+
+      {{end}}
   </zing-grid>
 
 </body>
