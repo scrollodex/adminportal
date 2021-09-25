@@ -42,13 +42,17 @@
   <zing-grid
       src="/admin/zingdata/{{.site}}/{{.table}}.json"
       align="left"
+      compact
       column-resizable
       column-width="fit"
-      editor-controls
+      editor-controls="editor"
       layout
-      page-size=100
+      loading-text="Loading your data"
+      page-size=5
+      page-size-options="5,10,50,100,2000"
       pager
       search
+      static-menu
       sort
       width="80%"
       >
@@ -78,32 +82,81 @@
 
       {{- else if eq .table "entries" -}}
       <zg-caption>Entries</zg-caption>
-
       <zg-colgroup>
         <!-- <zg-column index="ID"></zg-column> -->
-        <zg-column index="Salutation" header="Sal"></zg-column>
-        <zg-column index="Firstname"></zg-column>
-        <zg-column index="Lastname"></zg-column>
-        <zg-column index="Credentials"></zg-column>
-        <zg-column index="jobTitle"></zg-column>
-        <zg-column index="Company"></zg-column>
-        <zg-column index="ShortDesc"></zg-column>
-        <zg-column index="Phone"></zg-column>
-        <zg-column index="Fax" header="FXXX"></zg-column>
-        <zg-column index="Address"></zg-column>
-        <zg-column index="Email"></zg-column>
-        <zg-column index="Email2"></zg-column>
-        <zg-column index="Website"></zg-column>
-        <zg-column index="Website2"></zg-column>
-        <zg-column index="Fees"></zg-column>
-        <zg-column index="Description"></zg-column>
+        <zg-column
+          index="Salutation,Firstname,Lastname,Credentials,jobTitle,Company,ShortDesc"
+          header="Name"
+          width="200px">
+              <span class="character-info--header">
+                <strong>Name:</strong><br>
+                [[index.Salutation]]
+                [[index.Firstname]]
+                [[index.Lastname]],
+                [[index.Credentials]]
+                </strong>
+              </span>
+              <br>
+              <span class="character-info--subheader">
+                <strong>Title:</strong><br>
+                [[index.jobTitle]]
+              </span>
+              <br>
+              <span class="character-info--subheader">
+                <strong>Company:</strong><br>
+                [[index.Company]]
+              </span>
+              <br>
+              <span class="character-info--subheader">
+                <strong>Short Desc:</strong><br>
+                [[index.ShortDesc]]
+               </span>
+        </zg-column>
+        <zg-column
+          index="Address,Phone,Phone2,Fax,Email,Email2,Website,Website2"
+          header="Contact"
+          width="300px">
+              <span>
+                <strong>Address:</strong><br>[[index.Address]]</span><br>
+                <strong>Phone:</strong><br>[[index.Phone]]</span><br>
+                <strong>Phone2:</strong><br>[[index.Phone2]]</span><br>
+                <strong>Fax:</strong><br>[[index.Fax]]</span><br>
+                <strong>Email:</strong><br>[[index.Email]]</span><br>
+                <strong>Email2:</strong><br>[[index.Email2]]</span><br>
+                <strong>Website:</strong><br>[[index.Website]]</span><br>
+                <strong>Website2:</strong><br>[[index.Website2]]</span><br>
+              </span>
+        </zg-column>
+        <zg-column
+          index="Description,Fees"
+          header="Contact"
+          width="300px">
+              <span>
+                <strong>Description:</strong><br>[[index.Description]]</span><br>
+                <strong>Fees:</strong><br>[[index.Fees]]</span><br>
+              </span>
+        </zg-column>
         <zg-column index="CategoryID"></zg-column>
         <zg-column index="LocationID"></zg-column>
-        <zg-column index="Status"></zg-column>
-        <zg-column index="LastEditDate"></zg-column>
-        <zg-column index="PrivateLastEditBy"></zg-column>
-        <zg-column index="PrivateAdminNotes"></zg-column>
-        <zg-column index="PrivateContactEmail"></zg-column>
+        <zg-column
+          index="PrivateAdminNotes,PrivateContactEmail"
+          header="Not-For-Publication"
+          width="200px">
+              <span>
+                <strong>Private Contact Email:</strong><br>[[index.PrivateContactEmail]]</span><br>
+                <strong>Private Admin Notes:</strong><br>[[index.PrivateAdminNotes]]</span><br>
+              </span>
+        </zg-column>
+        <zg-column
+          index="PrivateLastEditBy,LastEditDate"
+          header="Edit Info"
+          width="200px">
+              <span>
+                <strong>Last Update:</strong><br>[[index.LastEditDate]]</span><br>
+                <strong>Last Edited By:</strong><br>[[index.PrivateLastEditBy]]</span><br>
+              </span>
+        </zg-column>
+
       </zg-colgroup>
 
       {{end}}

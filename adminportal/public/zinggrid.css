@@ -26,6 +26,9 @@ zg-head {
 zg-cell {
   color: blue;
   transition: 1s background-color;
+  vertical-align: top;
+}
+
 }
 
 zg-cell:hover {
