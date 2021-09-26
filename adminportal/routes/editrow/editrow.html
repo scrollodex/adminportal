@@ -7,11 +7,15 @@
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+  <!-- ZingGrid  -->
+  <!-- <script src="https://cdn.zinggrid.com/zinggrid.min.js"></script> -->
+
 	<script src="/public/js.cookie.js"></script>
 	<script src="/public/user.js"> </script>
-	<script src="/public/scrollodex.js"> </script>
+  <!-- <script src="/public/scrollodex.js"> </script> -->
   <!-- <link href="/public/app.css" rel="stylesheet"> -->
   <link href="/public/zinggrid.css" rel="stylesheet">
+  <link href="/public/formedit.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,7 +25,6 @@
       |
       <a id="qsLogoutBtn" class="" href="/logout">Logout</a>
     </p>
-    <p>Editiing <b>{{.site}} - {{.table}} - {{.id}}</b></p>
 
     <p>Edit:
       <a id="qsEntBtn" class="" href="/admin/edit/{{.site}}/entries">Entries</a>
@@ -30,6 +33,8 @@
       |
       <a id="qsCatBtn" class="" href="/admin/edit/{{.site}}/categories">Categories</a>
     </p>
+
+    <p>Editiing <b>{{.site}} - {{.table}} - {{.id}}</b></p>
 
   </div>
 
@@ -94,16 +99,24 @@
         <button type="button" class="btn-success btn" name="button-1632676131735" access="false" style="success" id="button-1632676131735">Save</button>
     </div>
     <div class="">
-        <h1 access="false" id="control-2206508">Entry #x</h1></div>
+        <h1 access="false" id="control-2206508">Entry #{{.item.ID}} Status={{.item.Status}}</h1></div>
     <div class="formbuilder-radio-group form-group field-radio-group-1632676834180">
-        <label for="radio-group-1632676834180" class="formbuilder-radio-group-label">Radio Group<span class="formbuilder-required">*</span></label>
+        <label for="radio-group-1632676834180" class="formbuilder-radio-group-label">Status<span class="formbuilder-required">*</span></label>
         <div class="radio-group">
             <div class="formbuilder-radio-inline">
-                <input name="radio-group-1632676834180" access="false" id="radio-group-1632676834180-0" required="required" aria-required="true" value="1" type="radio">
+                <input name="radio-group-1632676834180" access="false" id="radio-group-1632676834180-0" required="required" aria-required="true" value="1" type="radio"
+{{- if eq .item.Status 1 -}}
+checked="checked"
+{{- end -}}
+>
                 <label for="radio-group-1632676834180-0">ACTIVE</label>
             </div>
             <div class="formbuilder-radio-inline">
-                <input name="radio-group-1632676834180" access="false" id="radio-group-1632676834180-1" required="required" aria-required="true" value="0" type="radio">
+                <input name="radio-group-1632676834180" access="false" id="radio-group-1632676834180-1" required="required" aria-required="true" value="0" type="radio"
+{{- if ne .item.Status 1 -}}
+checked="checked"
+{{- end -}}
+>
                 <label for="radio-group-1632676834180-1">deactivated</label>
             </div>
         </div>
@@ -111,32 +124,34 @@
     <div class="formbuilder-select form-group field-select-1632676732741">
         <label for="select-1632676732741" class="formbuilder-select-label">Catagory<span class="formbuilder-required">*</span></label>
         <select class="form-control" name="select-1632676732741" id="select-1632676732741" required="required" aria-required="true">
-            <option value="option-1" selected="true" id="select-1632676732741-0">Option 1</option>
-            <option value="option-2" id="select-1632676732741-1">Option 2</option>
-            <option value="option-3" id="select-1632676732741-2">Option 3</option>
+          {{ $mine := .item.CategoryID }}
+          {{- range $index, $el := .catnvl }}
+            <option value="{{$el.Value}}" {{- if eq $el.Value $mine}}selected="true"{{end}}>{{$el.Name}}</option>
+          {{ end }}
         </select>
     </div>
     <div class="formbuilder-select form-group field-select-1632676809195">
         <label for="select-1632676809195" class="formbuilder-select-label">Location<span class="formbuilder-required">*</span></label>
         <select class="form-control" name="select-1632676809195" id="select-1632676809195" required="required" aria-required="true">
-            <option value="option-1" selected="true" id="select-1632676809195-0">Option 1</option>
-            <option value="option-2" id="select-1632676809195-1">Option 2</option>
-            <option value="option-3" id="select-1632676809195-2">Option 3</option>
+          {{ $mine := .item.LocationID }}
+          {{- range $index, $el := .locnvl }}
+            <option value="{{$el.Value}}" {{- if eq $el.Value $mine}}selected="true"{{end}}>{{$el.Name}}</option>
+          {{ end }}
         </select>
     </div>
     <div class="">
         <h3 access="false" id="control-5924">Name:</h3></div>
     <div class="formbuilder-text form-group field-text-1632676150550">
-        <label for="text-1632676150550" class="formbuilder-text-label">Salutation<span class="tooltip-element" tooltip="Dr./Mr./Ms./Mrs.">?</span></label>
-        <input type="text" placeholder="Dr." class="form-control" name="text-1632676150550" access="false" value="{{.item.Salutation}}" id="text-1632676150550" title="Dr./Mr./Ms./Mrs.">
+        <label for="text-1632676150550" class="formbuilder-text-label">Salutation<span class="tooltip-element" tooltip="Dr./Mr./Ms./Mrs.">:</span></label>
+        <input type="text" class="form-control" name="text-1632676150550" access="false" value="{{.item.Salutation}}" maxlength="5" id="text-1632676150550" title="Dr./Mr./Ms./Mrs.">
     </div>
     <div class="formbuilder-text form-group field-text-1632676152332">
         <label for="text-1632676152332" class="formbuilder-text-label">First Name:</label>
-        <input type="text" class="form-control" name="text-1632676152332" access="false" value="{{.item.FirstName}}" maxlength="50" id="text-1632676152332">
+        <input type="text" class="form-control" name="text-1632676152332" access="false" value="{{.item.Firstname}}" maxlength="50" id="text-1632676152332">
     </div>
     <div class="formbuilder-text form-group field-text-1632676155685">
         <label for="text-1632676155685" class="formbuilder-text-label">Last Name:</label>
-        <input type="text" class="form-control" name="text-1632676155685" access="false" value="{{.item.LastName}}" maxlength="50" id="text-1632676155685">
+        <input type="text" class="form-control" name="text-1632676155685" access="false" value="{{.item.Lastname}}" maxlength="50" id="text-1632676155685">
     </div>
     <div class="formbuilder-text form-group field-text-1632676386410">
         <label for="text-1632676386410" class="formbuilder-text-label">Credentials<span class="tooltip-element" tooltip="Letters that follow the name, such as MSW, LCW, CCC-A">:</span></label>
@@ -186,21 +201,21 @@
     </div>
     <div class="formbuilder-textarea form-group field-textarea-1632676686169">
         <label for="textarea-1632676686169" class="formbuilder-textarea-label">Description (MarkDown permitted)</label>
-        <textarea type="textarea" class="form-control" name="textarea-1632676686169" access="false" id="textarea-1632676686169">{{.item.Description}}</textarea>
+        <textarea type="textarea" rows=6 cols=80 class="form-control" name="textarea-1632676686169" access="false" id="textarea-1632676686169">{{.item.Description}}</textarea>
     </div>
     <div class="formbuilder-text form-group field-text-1632676682890">
         <label for="text-1632676682890" class="formbuilder-text-label">Fees</label>
-        <input type="text" class="form-control" name="text-1632676682890" access="false" value="{{.item.Description}}" id="text-1632676682890">
+        <input type="text" class="form-control" name="text-1632676682890" access="false" value="{{.item.Fees}}" id="text-1632676682890">
     </div>
     <div class="">
         <h1 access="false" id="control-8809127">Private/Administrative Notes</h1></div>
     <div class="formbuilder-text form-group field-text-1632677014693">
         <label for="text-1632677014693" class="formbuilder-text-label">Contact Email (not for publication)</label>
-        <input type="text" class="form-control" name="text-1632677014693" access="false" value="{{.item.Admin}}" id="text-1632677014693">
+        <input type="text" class="form-control" name="text-1632677014693" access="false" value="{{.item.PrivateContactEmail}}" id="text-1632677014693">
     </div>
     <div class="formbuilder-textarea form-group field-textarea-1632677017043">
         <label for="textarea-1632677017043" class="formbuilder-textarea-label">Administrative Notes (not for publication)</label>
-        <textarea type="textarea" class="form-control" name="textarea-1632677017043" access="false" id="textarea-1632677017043">{{.item.AdminNotes}}</textarea>
+        <textarea type="textarea" rows=6 cols=80 class="form-control" name="textarea-1632677017043" access="false" id="textarea-1632677017043">{{.item.PrivateAdminNotes}}</textarea>
     </div>
     <div class="">
         <h6 access="false" id="control-6448994">Last Edited by: {{.item.PrivateContactEmail}}</h6></div>

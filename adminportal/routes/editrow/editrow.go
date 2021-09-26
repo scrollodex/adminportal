@@ -11,6 +11,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/scrollodex/scrollodex/dextidy"
 	"github.com/scrollodex/scrollodex/reslist"
 )
 
@@ -68,6 +69,7 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch table {
+
 	case "categories":
 		d, err := dbh.CategoryGet(id)
 		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
@@ -75,6 +77,7 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, fmt.Sprintf("CategoryGet(%d) failed: %w", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
+
 	case "locations":
 		d, err := dbh.LocationGet(id)
 		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
@@ -82,13 +85,27 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, fmt.Sprintf("LocationGet(%d) failed: %w", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
-	case "entry":
+
+	case "entries":
 		d, err := dbh.EntryGet(id)
 		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("EntryGet(%d) failed: %w", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
+
+		if s, err := dextidy.CatNameVal(dbh); err != nil {
+			http.Error(w, fmt.Sprintf("NameVal(cat) err: %w", err), http.StatusInternalServerError)
+		} else {
+			data["catnvl"] = s
+		}
+
+		if s, err := dextidy.LocNameVal(dbh); err != nil {
+			http.Error(w, fmt.Sprintf("NameVal(loc) err: %w", err), http.StatusInternalServerError)
+		} else {
+			data["locnvl"] = s
+		}
+
 	}
 
 	templates.RenderTemplate(w, "editrow", data)

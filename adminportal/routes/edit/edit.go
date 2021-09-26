@@ -4,11 +4,8 @@ import (
 	"app"
 	"templates"
 
-	"encoding/json"
 	"fmt"
 	"net/http"
-	"sort"
-	"strings"
 
 	"github.com/scrollodex/scrollodex/dextidy"
 	"github.com/scrollodex/scrollodex/reslist"
@@ -19,72 +16,6 @@ import (
 type nameVal = struct {
 	Name  string `json:"name"`
 	Value int    `json:"value"`
-}
-
-func genCatList(dbh reslist.Databaser) (string, error) {
-	orig, err := dbh.CategoryList()
-	if err != nil {
-		return "", err
-	}
-	var nvl []*nameVal
-	for _, item := range orig {
-		n := &nameVal{Name: item.Name, Value: item.ID}
-		nvl = append(nvl, n)
-	}
-	sort.Slice(nvl, func(i, j int) bool { return nvl[i].Name < nvl[j].Name })
-	b, err := json.MarshalIndent(&nvl, "", "\t")
-	if err != nil {
-		return "", err
-	}
-	s := string(b)
-	return s, nil
-}
-
-func genLocList(dbh reslist.Databaser) (string, error) {
-	orig, err := dbh.LocationList()
-	if err != nil {
-		return "", err
-	}
-	var nvl []nameVal
-	for _, item := range orig {
-		n := nameVal{Name: dextidy.MakeDisplayLoc(item), Value: item.ID}
-		nvl = append(nvl, n)
-	}
-	sort.Slice(nvl, func(i, j int) bool {
-		// Sort the "-All" of each country to the top.
-		a := nvl[i].Name
-		b := nvl[j].Name
-		if a[:3] == b[:3] {
-			if strings.Contains(a, "-All") {
-				return true
-			}
-			if strings.Contains(b, "-All") {
-				return false
-			}
-		}
-		//  Otherwise, sort lexigraphically.
-		return nvl[i].Name < nvl[j].Name
-	})
-
-	b, err := json.MarshalIndent(&nvl, "", "\t")
-	if err != nil {
-		return "", err
-	}
-	s := string(b)
-	return s, nil
-}
-
-func genStatusList() (string, error) {
-	nvl := []nameVal{
-		{Name: "DISABLED", Value: 0},
-		{Name: "active", Value: 1},
-	}
-	b, err := json.MarshalIndent(&nvl, "", "\t")
-	if err != nil {
-		return "", err
-	}
-	s := string(b)
-	return s, nil
 }
 
 func EditHandler(w http.ResponseWriter, r *http.Request) {
@@ -120,29 +51,31 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 	if table != "categories" && table != "entries" && table != "locations" {
 		http.Error(w, fmt.Sprintf("No such table: %q", table), http.StatusInternalServerError)
 	}
-	data["loclist"] = `[]`
-	dbh, err := reslist.New(fmt.Sprintf("/Users/tlimoncelli/gitthings/scrollodex-db-%s", site))
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Reslist failed: %q", site), http.StatusInternalServerError)
-	}
 
-	s, err := genCatList(dbh)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("No such table: %q", "cat"), http.StatusInternalServerError)
-	}
-	data["catlist"] = s
+	if table == "entries" {
+		dbh, err := reslist.New(fmt.Sprintf("/Users/tlimoncelli/gitthings/scrollodex-db-%s", site))
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Reslist failed: %q", site), http.StatusInternalServerError)
+		}
 
-	s, err = genLocList(dbh)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("No such table: %q", "loc"), http.StatusInternalServerError)
-	}
-	data["loclist"] = s
+		s, err := dextidy.GenCatList(dbh)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("No such table: %q", "cat"), http.StatusInternalServerError)
+		}
+		data["catlist"] = s
 
-	s, err = genStatusList()
-	if err != nil {
-		http.Error(w, fmt.Sprintf("status list: %q", "status"), http.StatusInternalServerError)
+		s, err = dextidy.GenLocList(dbh)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("No such table: %q", "loc"), http.StatusInternalServerError)
+		}
+		data["loclist"] = s
+
+		s, err = dextidy.GenStatusList()
+		if err != nil {
+			http.Error(w, fmt.Sprintf("status list: %q", "status"), http.StatusInternalServerError)
+		}
+		data["statuslist"] = s
 	}
-	data["statuslist"] = s
 
 	templates.RenderTemplate(w, "edit", data)
 }

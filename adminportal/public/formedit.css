@@ -1,0 +1,25 @@
+.rendered-form {
+  font-family: "proxima-nova", sans-serif;
+  margin: 40px;
+  text-align: left;
+  font-weight: 100;
+}
+
+form {
+  width: 1200px;
+}
+label {
+  display: inline-block;
+  width: 350px;
+  font-weight: normal;
+}
+input {
+  display: inline-block;
+  width: 300px;
+  font-weight: bold;
+}
+
+textarea {
+  display: inline-block;
+  font-weight: bold;
+}

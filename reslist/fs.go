@@ -197,5 +197,6 @@ func (rh FSHandle) LocationGet(id int) (*dexmodels.Location, error) {
 func (rh FSHandle) EntryGet(id int) (*dexmodels.Entry, error) {
 	var data dexmodels.Entry
 	d, err := get(rh, "entry", id, &data)
+	fmt.Fprintf(os.Stderr, "DEBUG FS ENTRY = %v\n", d)
 	return d.(*dexmodels.Entry), err
 }
