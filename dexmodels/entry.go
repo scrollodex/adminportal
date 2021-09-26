@@ -6,8 +6,8 @@ package dexmodels
 type Entry struct {
 	EntryCommon `yaml:",inline"`
 	//
-	CategoryID          int    `yaml:"category_id"`
-	LocationID          int    `yaml:"location_id"`
+	CategoryID          int    `yaml:"category_id" json:"category_id"`
+	LocationID          int    `yaml:"location_id" json:"location_id"`
 	Status              int    `yaml:"status"` // 0=Inactive, 1=Active
 	LastEditDate        string `yaml:"lastUpdate" json:"last_update"`
 	PrivateLastEditBy   string `yaml:"private_last_edit_by" json:"private_last_edit_by"`
@@ -19,12 +19,12 @@ type Entry struct {
 type EntryCommon struct {
 	ID          int    `yaml:"id"`
 	Salutation  string `yaml:"salutation"`
-	Firstname   string `yaml:"first_name"`
-	Lastname    string `yaml:"last_name"`
+	Firstname   string `yaml:"first_name" json:"first_name"`
+	Lastname    string `yaml:"last_name" json:"last_name"`
 	Credentials string `yaml:"credentials"`
-	JobTitle    string `yaml:"job_title"`
-	Company     string `yaml:"company"`
-	ShortDesc   string `yaml:"short_desc"` // MarkDown (1 line)
+	JobTitle    string `yaml:"job_title" json:"job_title"`
+	Company     string `yaml:"company" json:"company"`
+	ShortDesc   string `yaml:"short_desc" json:"short_desc"` // MarkDown (1 line)
 	Phone       string `yaml:"phone"`
 	Fax         string `yaml:"fax"`
 	Address     string `yaml:"address"`
