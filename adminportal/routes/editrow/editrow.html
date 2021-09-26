@@ -36,7 +36,12 @@
 this is a category.
 
       {{- else if eq .table "locations" -}}
-this is a location.
+      this is a location.<br>
+      item {{.item}}<br>
+      id {{.item.ID}}<br>
+      CountryCode {{.item.CountryCode}}<br>
+      Region {{.item.Region}}<br>
+      Comment {{.item.Comment}}<br>
 
       {{- else if eq .table "entries" -}}
 this is a entry.

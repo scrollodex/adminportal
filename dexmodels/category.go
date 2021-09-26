@@ -1,7 +1,8 @@
 package dexmodels
 
 // Category represents a single Category in storage.
-// json: Used when generating JSON for ZingGrid.
+// json: Used to generate JSON for ZingGrid.
+// yaml: Used to read/write n the reslist YAML database.
 type Category struct {
 	ID          int    `yaml:"id" json:"id"`
 	Name        string `yaml:"category_name" json:"name"`
@@ -11,7 +12,7 @@ type Category struct {
 }
 
 // CategoryYAML represents a single Category in YAML.
-// yaml: Used when reading/writing raw data in the (yaml) database.
+// yaml: Used as part of writing the Hugo YAML file (data/entries.yaml)
 type CategoryYAML struct {
 	Category `yaml:",inline"`
 }

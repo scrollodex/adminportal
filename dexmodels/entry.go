@@ -1,8 +1,9 @@
 package dexmodels
 
 // Entry represents a single Entry.
-// yaml: Used when reading/writing raw data in the (yaml) database.
-// json: used when generating JSON for ZingGrid.
+// json: Used to generate JSON for ZingGrid.
+// yaml: Used to read/write n the reslist YAML database.
+// yaml: Used as part of writing the Hugo YAML file (data/entries.yaml)
 type Entry struct {
 	EntryCommon `yaml:",inline"`
 	//

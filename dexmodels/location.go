@@ -1,16 +1,17 @@
 package dexmodels
 
 // Location represents a single Location in storage.
-// json: Used when generating JSON for ZingGrid.
+// json: Used to generate JSON for ZingGrid.
+// yaml: Used to read/write n the reslist YAML database.
 type Location struct {
-	ID          int    `yaml:"id"`
-	CountryCode string `yaml:"country_code"`
-	Region      string `yaml:"region"`
-	Comment     string `yaml:"comment"`
+	ID          int    `yaml:"id" json:"id"`
+	CountryCode string `yaml:"country_code" json:"country_code"`
+	Region      string `yaml:"region" json:"region"`
+	Comment     string `yaml:"comment" json:"comment"`
 }
 
 // LocationYAML represents a single Location in YAML.
-// yaml: Used when reading/writing raw data in the (yaml) database.
+// yaml: Used as part of writing the Hugo YAML file (data/entries.yaml)
 type LocationYAML struct {
 	ID          int    `yaml:"id"`
 	Display     string `yaml:"display"`

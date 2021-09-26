@@ -49,18 +49,26 @@
       layout
       loading-text="Loading your data"
       pager
-      page-size-options="50,100,2000"
-      page-size="50"
       search
       sort
       static-menu
       width="80%"
+      {{if eq .table "categories" -}}
+      page-size-options="10,50,200"
+      page-size="50"
+      {{- else if eq .table "locations" -}}
+      page-size-options="10,50,200"
+      page-size="200"
+      {{- else if eq .table "entries" -}}
+      page-size-options="5,100,2000"
+      page-size="5"
+      {{end}}
       >
       {{if eq .table "categories" -}}
       <zg-caption>Categories</zg-caption>
       <zg-colgroup>
         <zg-column index="id" type="number" filter="disabled" width="80px" header=" " sort="disabled">
-          <span><a href="/admin/editrow/{{.site}}/{{.table}}/[[index.ID]]">EDIT</a></span>
+          <span><a href="/admin/editrow/{{.site}}/{{.table}}/[[index.id]]">EDIT</a></span>
         </zg-column>
         <zg-column index="name" width="330px" sort-asc></zg-column>
         <zg-column index="description" width="600px"> </zg-column>
@@ -78,7 +86,8 @@
           type="displayLoc"
           header="Will display as..."
           width="60px"
-          sort-asc>
+          sort-asc
+          filter="disabled">
         </zg-column>
         <!-- <zg-column index="ID"></zg-column> -->
         <zg-column index="CountryCode" width="30px" header="Country"></zg-column>
@@ -158,13 +167,11 @@
           width="300px"
           sort="disabled">
         </zg-column>
-        <!-- <zg-column index="CategoryID"></zg-column> -->
-        <zg-column index="CategoryID" type="select"
+        <zg-column index="category_id" type="select"
           type-select-options='{{.catlist}}'
          >
         </zg-column>
-        <!-- <zg-column index="LocationID"></zg-column> -->
-        <zg-column index="LocationID" type="select"
+        <zg-column index="location_id" type="select"
           type-select-options='{{.loclist}}'
          >
         </zg-column>
