@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"net/http"
 
 	"app"
@@ -19,11 +18,11 @@ func IsRbacEditor(w http.ResponseWriter, r *http.Request, next http.HandlerFunc)
 	if profile, ok := session.Values["profile"]; !ok {
 		http.Redirect(w, r, "/unauthorized", http.StatusSeeOther)
 	} else {
-		fmt.Printf("PROFILE = %+v\n", profile)
-		fmt.Printf("PROFILE TYPE = %T\n", profile)
+		//fmt.Printf("PROFILE = %+v\n", profile)
+		//fmt.Printf("PROFILE TYPE = %T\n", profile)
 
 		username := rbac.MakeUsername(profile)
-		fmt.Printf("USERNAME = %s\n", username)
+		//fmt.Printf("USERNAME = %s\n", username)
 		if !rbac.Can(username, "editor") {
 			http.Redirect(w, r, "/unauthorized", http.StatusSeeOther)
 		}

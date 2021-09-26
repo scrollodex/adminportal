@@ -3,6 +3,7 @@ package editrow
 import (
 	"app"
 	"log"
+	"os"
 	"strconv"
 	"templates"
 
@@ -67,20 +68,23 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch table {
-	case "category":
+	case "categories":
 		d, err := dbh.CategoryGet(id)
+		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("CategoryGet(%d) failed: %w", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
-	case "location":
+	case "locations":
 		d, err := dbh.LocationGet(id)
+		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("LocationGet(%d) failed: %w", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
 	case "entry":
 		d, err := dbh.EntryGet(id)
+		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("EntryGet(%d) failed: %w", id, err), http.StatusInternalServerError)
 		}

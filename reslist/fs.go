@@ -171,6 +171,7 @@ func get(rh FSHandle, table string, id int, data interface{}) (interface{}, erro
 		return nil, err
 	}
 	yaml.Unmarshal(b, data)
+	// TODO(tlim): Verify data.ID == ID.
 	//if data.ID != id {
 	//	log.Fatalf("File %s and the id: %d within does not match!", fileSpec, id)
 	//}
@@ -179,22 +180,22 @@ func get(rh FSHandle, table string, id int, data interface{}) (interface{}, erro
 }
 
 // CategoryGet gets a single item
-func (rh FSHandle) CategoryGet(id int) (dexmodels.Category, error) {
+func (rh FSHandle) CategoryGet(id int) (*dexmodels.Category, error) {
 	var data dexmodels.Category
 	d, err := get(rh, "category", id, &data)
-	return d.(dexmodels.Category), err
+	return d.(*dexmodels.Category), err
 }
 
 // LocationGet gets a single item
-func (rh FSHandle) LocationGet(id int) (dexmodels.Location, error) {
+func (rh FSHandle) LocationGet(id int) (*dexmodels.Location, error) {
 	var data dexmodels.Location
 	d, err := get(rh, "location", id, &data)
-	return d.(dexmodels.Location), err
+	return d.(*dexmodels.Location), err
 }
 
 // EntryGet gets a single item
-func (rh FSHandle) EntryGet(id int) (dexmodels.Entry, error) {
+func (rh FSHandle) EntryGet(id int) (*dexmodels.Entry, error) {
 	var data dexmodels.Entry
 	d, err := get(rh, "entry", id, &data)
-	return d.(dexmodels.Entry), err
+	return d.(*dexmodels.Entry), err
 }
