@@ -1,13 +1,52 @@
-# scrollodex -- The scrollodex CMS
+# Auth0 + Go Web App Sample
 
-Scrollodex is a web-based system for maintaining a static
-website that lists professionals (doctors, plumbers, therapists,
-etc.).
+This sample demonstrates how to add authentication to a Go web app using Auth0.
 
-The raw data is stored in YAML files in a git repository (rather
-than using a database system like MySQL).
+Check the [Go Quickstart](https://auth0.com/docs/quickstart/webapp/golang) to better understand this sample.
 
-An interactive web-based "admin portal" permits easy editing and
-updates.
+## Running the App
 
-This data is used to generate input to a Hugo-based static website.
+To run the app, make sure you have **go** installed.
+
+Rename the `.env.example` file to `.env` and provide your Auth0 credentials.
+
+```bash
+# .env
+
+AUTH0_CLIENT_ID=uhHdeq0eJa9EU0RULSOVwM7acSfo2Ike
+AUTH0_DOMAIN=dev-2vzqnqjr.us.auth0.com
+AUTH0_CLIENT_SECRET=vi4x1MOgzm8NHTiHG3lRhYEPEZ7T2qp6ZzayLGMkBX-8sj65IkyJB0PC4P-Potup
+AUTH0_CALLBACK_URL=http://localhost:3000/callback
+```
+
+Once you've set your Auth0 credentials in the `.env` file, run `go build ./...` to build and install the Go dependencies.
+
+Run `go run main.go server.go` to start the app and navigate to [http://localhost:3000/](http://localhost:3000/).
+
+## What is Auth0?
+
+Auth0 helps you to:
+
+* Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, amont others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
+* Add authentication through more traditional **[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
+* Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with the same user.
+* Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and **flow the user identity** securely.
+* Analytics of how, when and where users are logging in.
+* Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
+
+## Create a free Auth0 account
+
+1. Go to [Auth0](https://auth0.com/signup) and click Sign Up.
+2. Use Google, GitHub or Microsoft Account to login.
+
+## Issue Reporting
+
+If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+
+## Author
+
+[Auth0](https://auth0.com)
+
+## License
+
+This project is licensed under the MIT license. See the [LICENSE](LICENSE.txt) file for more info.
