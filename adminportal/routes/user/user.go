@@ -3,8 +3,8 @@ package user
 import (
 	"net/http"
 
-	"app"
-	"templates"
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/routes/templates"
 )
 
 func UserHandler(w http.ResponseWriter, r *http.Request) {

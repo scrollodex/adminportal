@@ -1,14 +1,14 @@
 package editrow
 
 import (
-	"app"
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
-	"templates"
 
-	"fmt"
-	"net/http"
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/routes/templates"
 
 	"github.com/gorilla/mux"
 	"github.com/scrollodex/scrollodex/dextidy"
@@ -74,7 +74,7 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 		d, err := dbh.CategoryGet(id)
 		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("CategoryGet(%d) failed: %w", id, err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("CategoryGet(%d) failed: %s", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
 
@@ -82,7 +82,7 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 		d, err := dbh.LocationGet(id)
 		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("LocationGet(%d) failed: %w", id, err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("LocationGet(%d) failed: %s", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
 
@@ -90,18 +90,18 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 		d, err := dbh.EntryGet(id)
 		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("EntryGet(%d) failed: %w", id, err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("EntryGet(%d) failed: %s", id, err), http.StatusInternalServerError)
 		}
 		data["item"] = d
 
 		if s, err := dextidy.CatNameVal(dbh); err != nil {
-			http.Error(w, fmt.Sprintf("NameVal(cat) err: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("NameVal(cat) err: %s", err), http.StatusInternalServerError)
 		} else {
 			data["catnvl"] = s
 		}
 
 		if s, err := dextidy.LocNameVal(dbh); err != nil {
-			http.Error(w, fmt.Sprintf("NameVal(loc) err: %w", err), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("NameVal(loc) err: %s", err), http.StatusInternalServerError)
 		} else {
 			data["locnvl"] = s
 		}

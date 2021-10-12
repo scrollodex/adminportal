@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"app"
-	"templates"
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/routes/templates"
 )
 
 func AdminHandler(w http.ResponseWriter, r *http.Request) {

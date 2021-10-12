@@ -3,7 +3,7 @@ package middlewares
 import (
 	"net/http"
 
-	"app"
+	"github.com/scrollodex/scrollodex/adminportal/app"
 )
 
 func IsAuthenticated(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {

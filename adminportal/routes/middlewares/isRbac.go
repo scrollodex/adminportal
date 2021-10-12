@@ -3,8 +3,8 @@ package middlewares
 import (
 	"net/http"
 
-	"app"
-	"rbac"
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/rbac"
 )
 
 func IsRbacEditor(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {

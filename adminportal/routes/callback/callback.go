@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/coreos/go-oidc"
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/auth"
 
-	"app"
-	"auth"
+	"github.com/coreos/go-oidc"
 )
 
 func CallbackHandler(w http.ResponseWriter, r *http.Request) {

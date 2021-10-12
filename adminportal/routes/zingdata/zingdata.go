@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"app"
-
 	"github.com/gorilla/mux"
+	"github.com/scrollodex/scrollodex/adminportal/app"
 	"github.com/scrollodex/scrollodex/reslist"
 )
 

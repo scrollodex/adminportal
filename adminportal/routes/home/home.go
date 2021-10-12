@@ -2,7 +2,8 @@ package home
 
 import (
 	"net/http"
-	"templates"
+
+	"github.com/scrollodex/scrollodex/adminportal/routes/templates"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {

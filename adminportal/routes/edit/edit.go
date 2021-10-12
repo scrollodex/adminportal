@@ -1,12 +1,11 @@
 package edit
 
 import (
-	"app"
-	"templates"
-
 	"fmt"
 	"net/http"
 
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/routes/templates"
 	"github.com/scrollodex/scrollodex/dextidy"
 	"github.com/scrollodex/scrollodex/reslist"
 

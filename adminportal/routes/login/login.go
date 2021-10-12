@@ -5,8 +5,8 @@ import (
 	"encoding/base64"
 	"net/http"
 
-	"app"
-	"auth"
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/auth"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {

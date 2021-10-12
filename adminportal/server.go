@@ -1,16 +1,16 @@
 package main
 
 import (
-	"admin"
-	"callback"
-	"edit"
-	"editrow"
-	"home"
-	"login"
-	"logout"
-	"middlewares"
-	"unauthorized"
-	"zingdata"
+	"github.com/scrollodex/scrollodex/adminportal/routes/admin"
+	"github.com/scrollodex/scrollodex/adminportal/routes/callback"
+	"github.com/scrollodex/scrollodex/adminportal/routes/edit"
+	"github.com/scrollodex/scrollodex/adminportal/routes/editrow"
+	"github.com/scrollodex/scrollodex/adminportal/routes/home"
+	"github.com/scrollodex/scrollodex/adminportal/routes/login"
+	"github.com/scrollodex/scrollodex/adminportal/routes/logout"
+	"github.com/scrollodex/scrollodex/adminportal/routes/middlewares"
+	"github.com/scrollodex/scrollodex/adminportal/routes/unauthorized"
+	"github.com/scrollodex/scrollodex/adminportal/routes/zingdata"
 
 	"log"
 	"net/http"

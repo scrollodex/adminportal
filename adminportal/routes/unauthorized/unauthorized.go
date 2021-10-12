@@ -2,10 +2,10 @@ package unauthorized
 
 import (
 	"net/http"
-	"rbac"
 
-	"app"
-	"templates"
+	"github.com/scrollodex/scrollodex/adminportal/app"
+	"github.com/scrollodex/scrollodex/adminportal/rbac"
+	"github.com/scrollodex/scrollodex/adminportal/routes/templates"
 )
 
 func UnauthorizedHandler(w http.ResponseWriter, r *http.Request) {
