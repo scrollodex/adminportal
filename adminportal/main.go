@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/scrollodex/scrollodex/adminportal/app"
+	"app"
 )
 
 func main() {
