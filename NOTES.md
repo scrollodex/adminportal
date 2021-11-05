@@ -11,3 +11,12 @@ An interactive web-based "admin portal" permits easy editing and
 updates.
 
 This data is used to generate input to a Hugo-based static website.
+
+
+https://medium.com/@saif_nasir/connect-docker-containers-the-easy-way-60fae730fe0
+sh exec.sh
+docker run -p 6379:6379 --name some-redis -d redis redis-server --save 60 1 --loglevel warning
+
+https://stackoverflow.com/questions/42385977/accessing-a-docker-container-from-another-container
+
+https://docs.docker.com/compose/networking/
