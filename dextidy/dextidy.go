@@ -1,6 +1,6 @@
 package dextidy
 
-import "github.com/scrollodex/scrollodex/dexmodels"
+import "github.com/scrollodex/dex/dexmodels"
 
 func MakeDisplayLoc(loc dexmodels.Location) string {
 	// This must match public/scrollodex.js:displayLocRenderer(). If you

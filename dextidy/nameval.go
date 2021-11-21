@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/scrollodex/scrollodex/reslist"
+	"github.com/scrollodex/dex/reslist"
 )
 
 type NameVal = struct {
