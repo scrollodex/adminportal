@@ -20,3 +20,7 @@ docker run -p 6379:6379 --name some-redis -d redis redis-server --save 60 1 --lo
 https://stackoverflow.com/questions/42385977/accessing-a-docker-container-from-another-container
 
 https://docs.docker.com/compose/networking/
+
+Starts all containers:
+start-all.sh
+TODO: Set up FileSystem so it doesn't coredump.

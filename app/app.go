@@ -25,7 +25,7 @@ func Init() error {
 	}
 
 	parts := strings.SplitN(os.Getenv("ADMINPORTAL_SESSIONSTORE"), ":", 2)
-	fmt.Printf("SESSION: %q\n", parts[0])
+	fmt.Printf("SESSION: type=%q\n", parts[0])
 	switch parts[0] {
 
 	case "file":
@@ -39,8 +39,10 @@ func Init() error {
 		if err != nil {
 			return fmt.Errorf("Init: %w", err)
 		}
-		store, err := redistore.NewRediStore(size, network, address, password, keyPairs)
+		fmt.Printf("DEBUG: redistore.NewRediStore(%d, %q, %q, %q, %q)\n", size, network, address, password, keyPairs)
+		Store, err := redistore.NewRediStore(size, network, address, password, keyPairs)
 		if err != nil {
+			fmt.Printf("DEBUG: failed redistore.NewRediStore\n")
 			panic(err)
 		}
 		defer store.Close()
