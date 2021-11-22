@@ -24,3 +24,6 @@ https://docs.docker.com/compose/networking/
 Starts all containers:
 start-all.sh
 TODO: Set up FileSystem so it doesn't coredump.
+
+apt-get update && apt-get install -y netcat
+docker exec -it 1cdb310b0134 bash

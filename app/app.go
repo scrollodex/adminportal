@@ -10,7 +10,6 @@ import (
 
 	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
-	"gopkg.in/boj/redistore.v1"
 )
 
 var (
@@ -33,20 +32,20 @@ func Init() error {
 		p := strings.SplitN(parts[1], ",", 2)
 		Store = sessions.NewFilesystemStore(p[0], []byte(p[1]))
 
-	case "redistore":
-		fmt.Printf("SESSION: redistore\n")
-		err, size, network, address, password, keyPairs := parseRedistore(parts[1])
-		if err != nil {
-			return fmt.Errorf("Init: %w", err)
-		}
-		fmt.Printf("DEBUG: redistore.NewRediStore(%d, %q, %q, %q, %q)\n", size, network, address, password, keyPairs)
-		Store, err := redistore.NewRediStore(size, network, address, password, keyPairs)
-		if err != nil {
-			fmt.Printf("DEBUG: failed redistore.NewRediStore\n")
-			panic(err)
-		}
-		defer store.Close()
-		fmt.Printf("SESSION: redistore CONNECTED\n")
+		//	case "redistore":
+		//		fmt.Printf("SESSION: redistore\n")
+		//		err, size, network, address, password, keyPairs := parseRedistore(parts[1])
+		//		if err != nil {
+		//			return fmt.Errorf("Init: %w", err)
+		//		}
+		//		fmt.Printf("DEBUG: redistore.NewRediStore(%d, %q, %q, %q, %q)\n", size, network, address, password, keyPairs)
+		//		store, err := redistore.NewRediStore(size, network, address, password, keyPairs)
+		//		if err != nil {
+		//			fmt.Printf("DEBUG: failed redistore.NewRediStore: %w\n", err)
+		//			panic(err)
+		//		}
+		//		//defer Store.Close()
+		//		fmt.Printf("SESSION: redistore CONNECTED\n")
 
 	default:
 		fmt.Printf("SESSION: default\n")
