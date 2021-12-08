@@ -12,6 +12,8 @@ require (
 	golang.org/x/oauth2 v0.0.0-20211005180243-6b3c2da341f1
 )
 
+replace github.com/scrollodex/dex/reslist => ./dex/reslist
+
 require (
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
