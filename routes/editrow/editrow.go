@@ -63,7 +63,8 @@ func EditrowHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("No such table: %q", table), http.StatusInternalServerError)
 	}
 
-	dbh, err := reslist.New(fmt.Sprintf("/Users/tlimoncelli/gitthings/scrollodex-db-%s", site))
+	//dbh, err := reslist.New(fmt.Sprintf("/Users/tlimoncelli/gitthings/scrollodex-db-%s", site))
+	dbh, err := reslist.New(os.Getenv("ADMINPORTAL_DB_CONNECTSTRING"), site)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Reslist failed: %q", site), http.StatusInternalServerError)
 	}

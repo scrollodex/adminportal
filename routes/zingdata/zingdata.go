@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/scrollodex/adminportal/app"
@@ -37,8 +38,8 @@ func ZingDataHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//dbh, err := reslist.New(fmt.Sprintf("git@scrollodex-github.com:scrollodex/scrollodex-db-%s.git", site))
-	dbh, err := reslist.New(fmt.Sprintf("/Users/tlimoncelli/gitthings/scrollodex-db-%s", site))
-	//dbh, err := reslist.New(os.GetEnv("ADMINPORTAL_RESBASE", site)
+	//dbh, err := reslist.New(fmt.Sprintf("/Users/tlimoncelli/gitthings/scrollodex-db-%s", site))
+	dbh, err := reslist.New(os.Getenv("ADMINPORTAL_DB_CONNECTSTRING"), site)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("CatList failed: %s", err), http.StatusInternalServerError)
 	}

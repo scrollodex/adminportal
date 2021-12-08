@@ -1,6 +1,7 @@
 cmd/makepublicyaml/makepublicyaml
 cmd/sdwebadmin/sdwebadmin
 adminportal/adminportal
+.env
 
 # Binaries for programs and plugins
 *.exe
