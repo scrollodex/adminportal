@@ -6,9 +6,9 @@ import (
 	"os"
 
 	"github.com/scrollodex/adminportal/app"
+	"github.com/scrollodex/adminportal/dex/dextidy"
+	"github.com/scrollodex/adminportal/dex/reslist"
 	"github.com/scrollodex/adminportal/routes/templates"
-	"github.com/scrollodex/dex/dextidy"
-	"github.com/scrollodex/dex/reslist"
 
 	"github.com/gorilla/mux"
 )

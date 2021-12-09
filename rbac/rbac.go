@@ -1,7 +1,6 @@
 package rbac
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -24,7 +23,7 @@ func Can(who, verb string) bool {
 }
 
 func MakeUsername(m interface{}) string {
-	fmt.Printf("MakeUsername(%v)\n", m)
+	//fmt.Printf("MakeUsername(%v)\n", m)
 	mp, ok := m.(map[string]interface{})
 	if !ok {
 		panic("An entire interface changed type. I just can't.")

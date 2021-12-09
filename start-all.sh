@@ -11,13 +11,14 @@ docker build -t scrollodex-adminportal .
 
 docker network create myNetwork || true
 
-docker container stop /myredis || true
+#docker container stop /myredis || true
 docker run --name myredis \
   --network myNetwork \
   -p 6379:6379 \
   -d redis redis-server \
   --save 60 1 \
-  --loglevel warning
+  --loglevel warning || true
+
 docker container stop /"$DNAME" || true
 docker run --name "$DNAME" \
   --env-file .env \

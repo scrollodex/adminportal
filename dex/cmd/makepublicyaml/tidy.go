@@ -11,10 +11,8 @@ import (
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
 
-	//"github.com/scrollodex/dex/dexmodels"
-	//"github.com/scrollodex/dex/reslist"
-	"dex/dexmodels"
-	"dex/reslist"
+	"github.com/scrollodex/adminportal/dex/dexmodels"
+	"github.com/scrollodex/adminportal/dex/reslist"
 )
 
 func getCatRaw(dbh reslist.Databaser) ([]dexmodels.Category, error) {

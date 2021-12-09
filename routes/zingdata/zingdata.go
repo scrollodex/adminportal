@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/scrollodex/adminportal/app"
-	"github.com/scrollodex/dex/reslist"
+	"github.com/scrollodex/adminportal/dex/reslist"
 )
 
 func ZingDataHandler(w http.ResponseWriter, r *http.Request) {

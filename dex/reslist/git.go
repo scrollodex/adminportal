@@ -7,14 +7,13 @@ import (
 	"os/exec"
 	"strings"
 
-	//"github.com/scrollodex/dex/dexmodels"
-	"dex/dexmodels"
+	"github.com/scrollodex/adminportal/dex/dexmodels"
 )
 
 // GITHandle is the handle used to refer to GIT.
 type GITHandle struct {
 	url  string
-	fdbh FSHandle
+	fdbh *FSHandle
 }
 
 // NewGIT creates a new GIT object.
@@ -30,14 +29,16 @@ func NewGit(url string) (Databaser, error) {
 		return nil, err
 	}
 	if de {
-		runCommand("git", "pull")
+		fmt.Printf("DEBUG: DIR EXISTS: %v\n", dir)
+		runCommand("git", "pull", "--force")
 	} else {
+		fmt.Printf("DEBUG: DIR DOES NOT EXIST: %v\n", dir)
 		runCommand("git", "clone", url, dir)
 	}
 
 	// NewFS
 	fdbh, err := NewFS(dir)
-	db.fdbh = fdbh.(FSHandle)
+	db.fdbh = fdbh.(*FSHandle)
 	if err != nil {
 		return nil, err
 	}
@@ -70,10 +71,10 @@ func runCommand(name string, arg ...string) error {
 	fmt.Printf("COMMAND: %s %v\n", name, arg)
 	cmd := exec.Command(name, arg...)
 	stdoutStderr, err := cmd.CombinedOutput()
+	fmt.Printf(" OUTPUT: %s\n", stdoutStderr)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf(" OUTPUT: %s\n", stdoutStderr)
 	return err
 }
 

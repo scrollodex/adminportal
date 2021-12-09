@@ -9,10 +9,10 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	//"github.com/scrollodex/dex/dexmodels"
-	//"github.com/scrollodex/dex/reslist"
-	"dex/dexmodels"
-	"dex/reslist"
+	//"github.com/scrollodex/adminportal/dex/dexmodels"
+	//"github.com/scrollodex/adminportal/dex/reslist"
+	"github.com/scrollodex/adminportal/dex/dexmodels"
+	"github.com/scrollodex/adminportal/dex/reslist"
 )
 
 /*

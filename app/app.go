@@ -62,7 +62,7 @@ func parseRedistore(s string) (err error, size int, network, address, password s
 
 	size, err = strconv.Atoi(p[0])
 	if err != nil {
-		return fmt.Errorf("parseRedistore: invalid size %q: %w\n", p[0], err), 0, "", "", "", []byte{}
+		return fmt.Errorf("parseRedistore: invalid size %q: %w", p[0], err), 0, "", "", "", []byte{}
 	}
 
 	network = p[1]

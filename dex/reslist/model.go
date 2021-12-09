@@ -1,7 +1,7 @@
 package reslist
 
-//import "github.com/scrollodex/dex/dexmodels"
-import "dex/dexmodels"
+//import "github.com/scrollodex/adminportal/dex/dexmodels"
+import "github.com/scrollodex/adminportal/dex/dexmodels"
 
 // Databaser is an interface for something that stores Scrollodex info.
 type Databaser interface {

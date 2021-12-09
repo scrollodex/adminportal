@@ -10,8 +10,8 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	//"github.com/scrollodex/dex/dexmodels"
-	"dex/dexmodels"
+	//"github.com/scrollodex/adminportal/dex/dexmodels"
+	"github.com/scrollodex/adminportal/dex/dexmodels"
 )
 
 // FSHandle is the handle used to refer to FS.

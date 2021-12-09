@@ -1,0 +1,9 @@
+# Scrollodex / tal@whatexit.org
+Host scrollodex-github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519-scrollodex
+  PreferredAuthentications publickey
+  PasswordAuthentication no
+  IdentitiesOnly yes
+  StrictHostKeyChecking no

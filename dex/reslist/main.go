@@ -9,7 +9,7 @@ import (
 // substituting site where a %s appears.
 func New(urlpattern string, site string) (Databaser, error) {
 
-	fmt.Printf("RESLIST New(%q, %q)", urlpattern, site)
+	fmt.Printf("DEBUG: RESLIST New(%q, %q)\n", urlpattern, site)
 
 	cs := strings.ReplaceAll(urlpattern, "%s", site)
 
