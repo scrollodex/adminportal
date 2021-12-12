@@ -1,7 +1,8 @@
+.env
+adminportal/adminportal
 cmd/makepublicyaml/makepublicyaml
 cmd/sdwebadmin/sdwebadmin
-adminportal/adminportal
-.env
+configdata/id_ed25519-scrollodex
 
 # Binaries for programs and plugins
 *.exe
