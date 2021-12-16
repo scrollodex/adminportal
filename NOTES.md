@@ -27,3 +27,16 @@ start-all.sh
 docker exec -it myportal bash
 apt-get update && apt-get install -y netcat
 
+
+# How to re-clone the test repos.
+REPO=bi
+cd ~/gitthings/test-db-$REPO
+rsync --delete --exclude=.git -avP ../scrollodex-db-$REPO/. .
+git add README.md category entry location 
+git commit -m'clone from source' -a
+git push
+
+# The admin panel:
+  https://beta.scrollodex.net
+  https://www.scrollodex.net
+

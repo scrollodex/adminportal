@@ -4,13 +4,19 @@ import (
 	"strings"
 )
 
-const UserTom = "https://dev-2vzqnqjr.us.auth0.com/ google-oauth2|108963384323763341815"
-const UserBh = "https://dev-2vzqnqjr.us.auth0.com/ google-oauth2|101744589201358810643"
-
 var policy = map[string]map[string]bool{
-	UserTom: {
+	// Tom <tal@whatexit.org>
+	"https://dev-2vzqnqjr.us.auth0.com/ google-oauth2|108963384323763341815": {
 		"editor": true,
 	},
+
+	// Michael Litzky <wondroustales@gmail.com>
+	"https://dev-2vzqnqjr.us.auth0.com/ auth0|61baad71fa2cd10069eb2baf": {
+		"editor": true,
+	},
+
+	// BestHabit3 <besthabit3@gmail.com> (intentionally has no access. For testing.)
+	"https://dev-2vzqnqjr.us.auth0.com/ google-oauth2|101744589201358810643": {},
 }
 
 func Can(who, verb string) bool {
