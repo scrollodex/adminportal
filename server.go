@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/scrollodex/adminportal/routes/admin"
 	"github.com/scrollodex/adminportal/routes/callback"
 	"github.com/scrollodex/adminportal/routes/edit"
@@ -53,6 +55,7 @@ func StartServer() {
 	)).Methods("GET")
 	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public/")))) // static files
 	http.Handle("/", r)
-	log.Print("Server listening on http://localhost:3000/")
-	log.Fatal(http.ListenAndServe("0.0.0.0:3000", nil))
+	tcpport := os.Getenv("ADMINPORTAL_TCPPORT")
+	log.Printf("Server listening on %v", tcpport)
+	log.Fatal(http.ListenAndServe(tcpport, nil))
 }
