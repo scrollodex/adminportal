@@ -27,12 +27,18 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		scheme = "https"
 	}
 
-	returnTo, err := url.Parse(scheme + "://" + r.Host)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	rhost := os.Getenv("ADMINPORTAL_REDIRECT_BASE")
+	if rhost != "" {
+		parameters.Add("returnTo", rhost)
+	} else {
+		returnTo, err := url.Parse(scheme + "://" + r.Host)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		parameters.Add("returnTo", returnTo.String())
 	}
-	parameters.Add("returnTo", returnTo.String())
+
 	parameters.Add("client_id", os.Getenv("AUTH0_CLIENT_ID"))
 	logoutUrl.RawQuery = parameters.Encode()
 
