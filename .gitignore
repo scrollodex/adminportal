@@ -3,6 +3,8 @@ adminportal/adminportal
 cmd/makepublicyaml/makepublicyaml
 cmd/sdwebadmin/sdwebadmin
 configdata/id_ed25519-scrollodex
+exit148prod/.env-GOOD
+exit148prod/.env-NEW
 
 # Binaries for programs and plugins
 *.exe

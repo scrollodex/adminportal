@@ -1,7 +1,6 @@
 # scrollodex -- The scrollodex CMS
 
-Scrollodex is a web-based system for maintaining a static
-website that lists professionals (doctors, plumbers, therapists,
+Scrollodex is a web-based system for maintaining a static website that lists professionals (doctors, plumbers, therapists,
 etc.).
 
 The raw data is stored in YAML files in a git repository (rather
@@ -62,7 +61,8 @@ NEW:
 -> clicks "publish": generates yaml and commits to hugo-bi
 -> CircleCI sees change in hugo-bi, generates website
 
-# Reclone the beta area from production:
+# Re-clone the beta area from production:
 
-DB=poly ; for i in category entry location; do rsync --delete -avP ../scrollodex-db-$DB/$i/. ../beta-scollodex-db-$DB/$i/. ; done
+make reset-test-data
+
 
