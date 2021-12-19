@@ -14,6 +14,7 @@ import (
 type GITHandle struct {
 	url      string
 	dir      string
+	repodir  string
 	fshandle *FSHandle
 }
 
@@ -26,10 +27,16 @@ func NewGit(url string) (Databaser, error) {
 		dir: cloneDirName(url),
 	}
 
-	db.init()
+	fmt.Printf("DEBUG: NewGit init\n")
+	err := db.init()
+	if err != nil {
+		return nil, err
+	}
+	fmt.Printf("DEBUG: NewGit init DONE\n")
 
 	// NewFS
-	fshandle, err := NewFS(db.dir)
+	fmt.Printf("DEBUG: NewGit dir=%q\n", db.repodir)
+	fshandle, err := NewFS(db.repodir)
 	db.fshandle = fshandle.(*FSHandle)
 	if err != nil {
 		return nil, err
@@ -43,25 +50,40 @@ func (rh GITHandle) init() error {
 	dir := rh.dir
 	basedir := filepath.Join(os.Getenv("ADMINPORTAL_BASEDIR"))
 	repodir := filepath.Join(basedir, dir)
+	rh.repodir = repodir
+	gitmeta := filepath.Join(basedir, dir, ".git")
+
+	fmt.Printf("DEBUG: basedir=%q\n", basedir)
+	fmt.Printf("DEBUG: repodir=%q\n", repodir)
+
+	//os.Setenv("GIT_SSH_COMMAND", `/usr/bin/ssh -i /home/tal/.ssh/id_ed25519-scrollodex`)
+	//os.Setenv("GIT_SSH_COMMAND", `/usr/bin/ssh -i /home/tal/.ssh/id_ed25519-scrollbeta`)
 
 	// Are we already cloned and ready?  Just "git pull".
-	err := os.Chdir(repodir)
-	if err == nil {
-		fmt.Printf("DEBUG: REPO DIR EXISTS. PULLING: %v\n", dir)
-		return runCommand("git", "pull", "--force")
+	fmt.Printf("DEBUG: exists(%q)\n", gitmeta)
+	de, _ := dirExists(gitmeta)
+	if de {
+		fmt.Printf("DEBUG: gitmeta exists\n")
+		fmt.Printf("DEBUG: chdir(%q)\n", repodir)
+		if err := os.Chdir(repodir); err == nil {
+			fmt.Printf("DEBUG: REPO DIR EXISTS: %q\n", repodir)
+			fmt.Printf("DEBUG: PULLING.\n")
+			return runCommand("git", "pull", "--force")
+		}
 	}
 
 	// Otherwise, we have to "git clone" and cd into it.
-	err = os.Chdir(basedir)
-	if err != nil {
+	fmt.Printf("DEBUG: chdir(%q)\n", basedir)
+	if err := os.Chdir(basedir); err != nil {
+		fmt.Printf("DEBUG: BASEDIR NOT EXISTS: %q\n", basedir)
 		return fmt.Errorf("chdir(%q) failed: %w", basedir, err)
 	}
 
-	fmt.Printf("DEBUG: DIR DOES NOT EXIST: %v\n", dir)
-	if err = runCommand("git", "clone", url, dir); err != nil {
+	fmt.Printf("DEBUG: CLONING\n")
+	if err := runCommand("git", "clone", url, dir); err != nil {
 		return err
 	}
-
+	fmt.Printf("DEBUG: chdir(%q)\n", repodir)
 	return os.Chdir(repodir)
 }
 
@@ -79,23 +101,24 @@ func cloneDirName(cs string) string {
 	return cs
 }
 
-//// dirExists returns whether the given file or directory exists
-//func dirExists(path string) (bool, error) {
-//	_, err := os.Stat(path)
-//	if err == nil {
-//		return true, nil
-//	}
-//	if os.IsNotExist(err) {
-//		return false, nil
-//	}
-//	return false, err
-//}
+// dirExists returns whether the given file or directory exists
+func dirExists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
+}
 
 func runCommand(name string, arg ...string) error {
 	fmt.Printf("COMMAND: %s %v\n", name, arg)
 	cmd := exec.Command(name, arg...)
 	stdoutStderr, err := cmd.CombinedOutput()
 	fmt.Printf(" OUTPUT: %s\n", stdoutStderr)
+	//fmt.Printf(" oERROR: %v\n", err.(*exec.ExitError))
 	return err
 }
 

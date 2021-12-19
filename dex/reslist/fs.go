@@ -103,6 +103,7 @@ func (rh FSHandle) CategoryList() ([]dexmodels.Category, error) {
 // LocationList returns a list of all locations.
 func (rh FSHandle) LocationList() ([]dexmodels.Location, error) {
 	fileSpec := filepath.Join(rh.directory, "location", "*.yaml")
+	fmt.Printf("DEBUG: fileSpec = %q\n", fileSpec)
 	matches, err := filepath.Glob(fileSpec)
 	sort.Strings(matches)
 	if err != nil {

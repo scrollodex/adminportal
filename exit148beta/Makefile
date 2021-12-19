@@ -9,3 +9,6 @@ run:
 	-sudo /usr/local/etc/rc.d/adminportalbeta stop
 	sudo /usr/local/etc/rc.d/adminportalbeta start
 	-sudo /usr/local/etc/rc.d/nginx reload
+
+stop:
+	-sudo /usr/local/etc/rc.d/adminportalbeta stop

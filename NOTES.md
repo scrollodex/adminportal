@@ -48,3 +48,21 @@ Have them log in and be rejected. Give the rejection code:
 Add code here:
 vi routes/unauthorized/unauthorized.go
 
+
+# Architecture
+
+CURRENT:
+
+Webserver + MySQL
+-> hourly check; generate yaml commit to hugo-bi
+-> CircleCI sees change in hugo-bi, generates website
+
+NEW:
+-> adminportal edits scrollodex-db-bi
+-> clicks "publish": generates yaml and commits to hugo-bi
+-> CircleCI sees change in hugo-bi, generates website
+
+# Reclone the beta area from production:
+
+DB=poly ; for i in category entry location; do rsync --delete -avP ../scrollodex-db-$DB/$i/. ../beta-scollodex-db-$DB/$i/. ; done
+

@@ -8,7 +8,10 @@ import (
 )
 
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
-	cwd, _ := os.Getwd()
+	cwd := os.Getenv("ADMINPORTAL_TEMPLATE_BASEDIR")
+	if cwd == "" {
+		cwd, _ = os.Getwd()
+	}
 	t, err := template.ParseFiles(filepath.Join(cwd, "./routes/"+tmpl+"/"+tmpl+".html"))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

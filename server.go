@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/scrollodex/adminportal/routes/admin"
 	"github.com/scrollodex/adminportal/routes/callback"
@@ -53,7 +55,9 @@ func StartServer() {
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
 		negroni.Wrap(http.HandlerFunc(zingdata.ZingDataHandler)),
 	)).Methods("GET")
-	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public/")))) // static files
+	pubdir := filepath.Join(os.Getenv("ADMINPORTAL_TEMPLATE_BASEDIR"), "public") + "/"
+	fmt.Printf("DEBUG: pubdir=%q\n", pubdir)
+	r.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir(pubdir)))) // static files
 	http.Handle("/", r)
 	tcpport := os.Getenv("ADMINPORTAL_TCPPORT")
 	log.Printf("Server listening on %v", tcpport)
