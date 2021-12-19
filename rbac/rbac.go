@@ -6,14 +6,24 @@ import (
 
 var policy = map[string]map[string]bool{
 	// Tom <tal@whatexit.org>
+	// Added Dec 2021
 	"https://dev-2vzqnqjr.us.auth0.com/ google-oauth2|108963384323763341815": {
 		"editor": true,
 	},
 
 	// Michael Litzky <wondroustales@gmail.com>
+	// Added Dec 2021
 	"https://dev-2vzqnqjr.us.auth0.com/ auth0|61baad71fa2cd10069eb2baf": {
 		"editor": true,
 	},
+
+	// Geri <geriweitzman@gmail.com>
+	// Added 2021-12-17
+	"https://dev-2vzqnqjr.us.auth0.com/ auth0|61bbca7dfa2cd10069eb7780": {
+		"editor": true,
+	},
+
+	// INSERT NEW PEOPLE HERE.
 
 	// BestHabit3 <besthabit3@gmail.com> (intentionally has no access. For testing.)
 	"https://dev-2vzqnqjr.us.auth0.com/ google-oauth2|101744589201358810643": {},

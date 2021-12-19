@@ -40,3 +40,11 @@ git push
   https://beta.scrollodex.net
   https://www.scrollodex.net
 
+
+# Creating users
+
+Have them log in and be rejected. Give the rejection code:
+
+Add code here:
+vi routes/unauthorized/unauthorized.go
+
