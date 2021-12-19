@@ -138,44 +138,50 @@ func (rh GITHandle) EntryStore(data dexmodels.Entry) error {
 
 // CategoryList returns a list of all categories.
 func (rh GITHandle) CategoryList() ([]dexmodels.Category, error) {
-	// TODO: git pull
-	// TODO: rh.fsthandle.CategoryList(data)
-	return nil, nil
+	if err := rh.init(); err != nil {
+		return nil, err
+	}
+	return rh.fshandle.CategoryList()
 }
 
 // LocationList returns a list of all locations.
 func (rh GITHandle) LocationList() ([]dexmodels.Location, error) {
-	// TODO: git pull
-	// TODO: rh.fsthandle.LocationList(data)
-	return nil, nil
+	if err := rh.init(); err != nil {
+		return nil, err
+	}
+	return rh.fshandle.LocationList()
 }
 
 // EntryList returns a list of all entries.
 func (rh GITHandle) EntryList() ([]dexmodels.Entry, error) {
-	// TODO: git pull
-	// TODO: rh.fsthandle.EntryList(data)
-	return nil, nil
+	if err := rh.init(); err != nil {
+		return nil, err
+	}
+	return rh.fshandle.EntryList()
 }
 
 // Get
 
 // CategoryGet gets a single item
 func (rh GITHandle) CategoryGet(id int) (*dexmodels.Category, error) {
-	// TODO: git pull
-	// TODO: rh.fsthandle.CategoryGet(data)
-	return nil, nil
+	if err := rh.init(); err != nil {
+		return nil, err
+	}
+	return rh.fshandle.CategoryGet(id)
 }
 
 // LocationGet gets a single item
 func (rh GITHandle) LocationGet(id int) (*dexmodels.Location, error) {
-	// TODO: git pull
-	// TODO: rh.fsthandle.LocationGet(data)
-	return nil, nil
+	if err := rh.init(); err != nil {
+		return nil, err
+	}
+	return rh.fshandle.LocationGet(id)
 }
 
 // EntryGet gets a single item
 func (rh GITHandle) EntryGet(id int) (*dexmodels.Entry, error) {
-	// TODO: git pull
-	// TODO: rh.fsthandle.EntryGet(data)
-	return nil, nil
+	if err := rh.init(); err != nil {
+		return nil, err
+	}
+	return rh.fshandle.EntryGet(id)
 }
