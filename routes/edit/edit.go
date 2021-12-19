@@ -13,10 +13,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type nameVal = struct {
-	Name  string `json:"name"`
-	Value int    `json:"value"`
-}
+//type nameVal = struct {
+//	Name  string `json:"name"`
+//	Value int    `json:"value"`
+//}
 
 func EditHandler(w http.ResponseWriter, r *http.Request) {
 

@@ -10,6 +10,8 @@ import (
 
 	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
+
+	"gopkg.in/boj/redistore.v1"
 )
 
 var (
@@ -32,20 +34,20 @@ func Init() error {
 		p := strings.SplitN(parts[1], ",", 2)
 		Store = sessions.NewFilesystemStore(p[0], []byte(p[1]))
 
-		//	case "redistore":
-		//		fmt.Printf("SESSION: redistore\n")
-		//		err, size, network, address, password, keyPairs := parseRedistore(parts[1])
-		//		if err != nil {
-		//			return fmt.Errorf("Init: %w", err)
-		//		}
-		//		fmt.Printf("DEBUG: redistore.NewRediStore(%d, %q, %q, %q, %q)\n", size, network, address, password, keyPairs)
-		//		store, err := redistore.NewRediStore(size, network, address, password, keyPairs)
-		//		if err != nil {
-		//			fmt.Printf("DEBUG: failed redistore.NewRediStore: %w\n", err)
-		//			panic(err)
-		//		}
-		//		//defer Store.Close()
-		//		fmt.Printf("SESSION: redistore CONNECTED\n")
+	case "redistore":
+		fmt.Printf("SESSION: redistore\n")
+		size, network, address, password, keyPairs, err := parseRedistore(parts[1])
+		if err != nil {
+			return fmt.Errorf("Init: %w", err)
+		}
+		fmt.Printf("DEBUG: redistore.NewRediStore(%d, %q, %q, %q, %q)\n", size, network, address, password, keyPairs)
+		store, err := redistore.NewRediStore(size, network, address, password, keyPairs)
+		if err != nil {
+			fmt.Printf("DEBUG: failed redistore.NewRediStore: %w\n", err)
+			panic(err)
+		}
+		fmt.Printf("SESSION: redistore CONNECTED\n")
+		defer store.Close()
 
 	default:
 		fmt.Printf("SESSION: default\n")
@@ -56,13 +58,13 @@ func Init() error {
 	return nil
 }
 
-func parseRedistore(s string) (err error, size int, network, address, password string, key []byte) {
+func parseRedistore(s string) (size int, network, address, password string, key []byte, err error) {
 
 	p := strings.Split(s, ",")
 
 	size, err = strconv.Atoi(p[0])
 	if err != nil {
-		return fmt.Errorf("parseRedistore: invalid size %q: %w", p[0], err), 0, "", "", "", []byte{}
+		return 0, "", "", "", []byte{}, fmt.Errorf("parseRedistore: invalid size %q: %w", p[0], err)
 	}
 
 	network = p[1]

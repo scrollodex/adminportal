@@ -2,9 +2,9 @@ package reslist
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/scrollodex/adminportal/dex/dexmodels"
@@ -12,33 +12,25 @@ import (
 
 // GITHandle is the handle used to refer to GIT.
 type GITHandle struct {
-	url  string
-	fdbh *FSHandle
+	url      string
+	dir      string
+	fshandle *FSHandle
 }
+
+// Initialization
 
 // NewGIT creates a new GIT object.
 func NewGit(url string) (Databaser, error) {
 	db := &GITHandle{
 		url: url,
+		dir: cloneDirName(url),
 	}
 
-	// If directory exists, git pull. else git clone
-	dir := whatDir(url)
-	de, err := exists(dir)
-	if err != nil {
-		return nil, err
-	}
-	if de {
-		fmt.Printf("DEBUG: DIR EXISTS: %v\n", dir)
-		runCommand("git", "pull", "--force")
-	} else {
-		fmt.Printf("DEBUG: DIR DOES NOT EXIST: %v\n", dir)
-		runCommand("git", "clone", url, dir)
-	}
+	db.init()
 
 	// NewFS
-	fdbh, err := NewFS(dir)
-	db.fdbh = fdbh.(*FSHandle)
+	fshandle, err := NewFS(db.dir)
+	db.fshandle = fshandle.(*FSHandle)
 	if err != nil {
 		return nil, err
 	}
@@ -46,8 +38,40 @@ func NewGit(url string) (Databaser, error) {
 	return db, nil
 }
 
-// whatDir reports the directory that "git clone" will create.
-func whatDir(cs string) string {
+func (rh GITHandle) init() error {
+	url := rh.url
+	dir := rh.dir
+	basedir := filepath.Join(os.Getenv("ADMINPORTAL_BASEDIR"))
+	repodir := filepath.Join(basedir, dir)
+
+	// Are we already cloned and ready?  Just "git pull".
+	err := os.Chdir(repodir)
+	if err == nil {
+		fmt.Printf("DEBUG: REPO DIR EXISTS. PULLING: %v\n", dir)
+		return runCommand("git", "pull", "--force")
+	}
+
+	// Otherwise, we have to "git clone" and cd into it.
+	err = os.Chdir(basedir)
+	if err != nil {
+		return fmt.Errorf("chdir(%q) failed: %w", basedir, err)
+	}
+
+	fmt.Printf("DEBUG: DIR DOES NOT EXIST: %v\n", dir)
+	if err = runCommand("git", "clone", url, dir); err != nil {
+		return err
+	}
+
+	return os.Chdir(repodir)
+}
+
+func (rh GITHandle) commit() error {
+	fmt.Printf("DEBUG: COMMITTING\n")
+	return runCommand("git", "commit", "-m", "Automated commit from AdminPanel")
+}
+
+// cloneDirName reports the directory that "git clone" will create.
+func cloneDirName(cs string) string {
 	cs = strings.ReplaceAll(cs, ":", "_")
 	cs = strings.ReplaceAll(cs, "@", "_")
 	cs = strings.ReplaceAll(cs, "/", "_")
@@ -55,58 +79,62 @@ func whatDir(cs string) string {
 	return cs
 }
 
-// exists returns whether the given file or directory exists
-func exists(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
-	}
-	return false, err
-}
+//// dirExists returns whether the given file or directory exists
+//func dirExists(path string) (bool, error) {
+//	_, err := os.Stat(path)
+//	if err == nil {
+//		return true, nil
+//	}
+//	if os.IsNotExist(err) {
+//		return false, nil
+//	}
+//	return false, err
+//}
 
 func runCommand(name string, arg ...string) error {
 	fmt.Printf("COMMAND: %s %v\n", name, arg)
 	cmd := exec.Command(name, arg...)
 	stdoutStderr, err := cmd.CombinedOutput()
 	fmt.Printf(" OUTPUT: %s\n", stdoutStderr)
-	if err != nil {
-		log.Fatal(err)
-	}
 	return err
 }
 
+// Store
+
 // CategoryStore stores a category in stable storage.
 func (rh GITHandle) CategoryStore(data dexmodels.Category) error {
-
-	// TODO: git pull
-	// TODO: rh.fsthandle.CategoryStore(data)
-	// TODO: git commit and push
-
-	return nil
+	if err := rh.init(); err != nil {
+		return err
+	}
+	if err := rh.fshandle.CategoryStore(data); err != nil {
+		return err
+	}
+	return rh.commit()
 }
 
 // LocationStore stores a location in stable storage.
 func (rh GITHandle) LocationStore(data dexmodels.Location) error {
-
-	// TODO: git pull
-	// TODO: rh.fsthandle.LocationStore(data)
-	// TODO: git commit and push
-
-	return nil
+	if err := rh.init(); err != nil {
+		return err
+	}
+	if err := rh.fshandle.LocationStore(data); err != nil {
+		return err
+	}
+	return rh.commit()
 }
 
 // EntryStore stores an entry in stable storage.
 func (rh GITHandle) EntryStore(data dexmodels.Entry) error {
-
-	// TODO: git pull
-	// TODO: rh.fsthandle.LocationStore(data)
-	// TODO: git commit and push
-
-	return nil
+	if err := rh.init(); err != nil {
+		return err
+	}
+	if err := rh.fshandle.EntryStore(data); err != nil {
+		return err
+	}
+	return rh.commit()
 }
+
+// List
 
 // CategoryList returns a list of all categories.
 func (rh GITHandle) CategoryList() ([]dexmodels.Category, error) {
@@ -128,6 +156,8 @@ func (rh GITHandle) EntryList() ([]dexmodels.Entry, error) {
 	// TODO: rh.fsthandle.EntryList(data)
 	return nil, nil
 }
+
+// Get
 
 // CategoryGet gets a single item
 func (rh GITHandle) CategoryGet(id int) (*dexmodels.Category, error) {
