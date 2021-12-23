@@ -29,6 +29,7 @@ var policy = map[string]map[string]bool{
 	"https://dev-2vzqnqjr.us.auth0.com/ google-oauth2|101744589201358810643": {},
 }
 
+// Can returns true if who is entitled to do verb.
 func Can(who, verb string) bool {
 	if perms, ok := policy[who]; ok {
 		if can, ok := perms[verb]; ok {
@@ -38,6 +39,7 @@ func Can(who, verb string) bool {
 	return false
 }
 
+// MakeUsername returns a stable name for m.
 func MakeUsername(m interface{}) string {
 	//fmt.Printf("MakeUsername(%v)\n", m)
 	mp, ok := m.(map[string]interface{})

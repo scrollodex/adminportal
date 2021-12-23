@@ -10,12 +10,14 @@ import (
 	oidc "github.com/coreos/go-oidc"
 )
 
+// Authenticator contains authentication context.
 type Authenticator struct {
 	Provider *oidc.Provider
 	Config   oauth2.Config
 	Ctx      context.Context
 }
 
+// NewAuthenticator constructs an authenticator.
 func NewAuthenticator() (*Authenticator, error) {
 	ctx := context.Background()
 

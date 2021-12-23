@@ -9,6 +9,7 @@ import (
 	"github.com/scrollodex/adminportal/dex/reslist"
 )
 
+// NameVal is used for key/value read/write in JSON.
 type NameVal = struct {
 	Name  string `json:"name"`
 	Value int    `json:"value"`
@@ -29,7 +30,7 @@ func CatNameVal(dbh reslist.Databaser) ([]NameVal, error) {
 	return nvl, nil
 }
 
-// CatNameVal returns CatNameVal as a JSON string.
+// GenCatList returns CatNameVal as a JSON string.
 func GenCatList(dbh reslist.Databaser) (string, error) {
 	nvl, err := CatNameVal(dbh)
 	if err != nil {
@@ -71,6 +72,7 @@ func LocNameVal(dbh reslist.Databaser) ([]NameVal, error) {
 	return nvl, nil
 }
 
+// GenLocList returns locations as a JSON string.
 func GenLocList(dbh reslist.Databaser) (string, error) {
 	nvl, err := LocNameVal(dbh)
 	if err != nil {
@@ -83,6 +85,7 @@ func GenLocList(dbh reslist.Databaser) (string, error) {
 	return string(b), nil
 }
 
+// GenStatusList returns Status as a JSON string.
 func GenStatusList() (string, error) {
 	nvl := []NameVal{
 		{Name: "DISABLED", Value: 0},

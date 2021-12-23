@@ -23,14 +23,15 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// StartServer starts the HTTP server.
 func StartServer() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/", home.HomeHandler)
-	r.HandleFunc("/login", login.LoginHandler)
-	r.HandleFunc("/logout", logout.LogoutHandler)
-	r.HandleFunc("/callback", callback.CallbackHandler)
-	r.HandleFunc("/unauthorized", unauthorized.UnauthorizedHandler)
+	r.HandleFunc("/", home.Handler)
+	r.HandleFunc("/login", login.Handler)
+	r.HandleFunc("/logout", logout.Handler)
+	r.HandleFunc("/callback", callback.Handler)
+	r.HandleFunc("/unauthorized", unauthorized.Handler)
 	//r.Handle("/user", negroni.New(
 	//	negroni.HandlerFunc(middlewares.IsAuthenticated),
 	//	negroni.Wrap(http.HandlerFunc(user.UserHandler)),
@@ -38,22 +39,22 @@ func StartServer() {
 	r.Handle("/admin", negroni.New(
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
-		negroni.Wrap(http.HandlerFunc(admin.AdminHandler)),
+		negroni.Wrap(http.HandlerFunc(admin.Handler)),
 	))
 	r.Handle("/admin/editrow/{site:[a-z]+}/{table:[a-z]+}/{id:[0-9]+}", negroni.New(
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
-		negroni.Wrap(http.HandlerFunc(editrow.EditrowHandler)),
+		negroni.Wrap(http.HandlerFunc(editrow.Handler)),
 	)).Methods("GET")
 	r.Handle("/admin/edit/{site:[a-z]+}/{table:[a-z]+}", negroni.New(
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
-		negroni.Wrap(http.HandlerFunc(edit.EditHandler)),
+		negroni.Wrap(http.HandlerFunc(edit.Handler)),
 	)).Methods("GET")
 	r.Handle("/admin/zingdata/{site:[a-z]+}/{table:[a-z]+}.json", negroni.New(
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
-		negroni.Wrap(http.HandlerFunc(zingdata.ZingDataHandler)),
+		negroni.Wrap(http.HandlerFunc(zingdata.Handler)),
 	)).Methods("GET")
 	pubdir := filepath.Join(os.Getenv("ADMINPORTAL_TEMPLATE_BASEDIR"), "public") + "/"
 	fmt.Printf("DEBUG: pubdir=%q\n", pubdir)

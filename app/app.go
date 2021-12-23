@@ -15,9 +15,11 @@ import (
 )
 
 var (
+	// Store stores session state
 	Store *sessions.FilesystemStore
 )
 
+// Init sets up the environment, session storage, etc.
 func Init() error {
 	err := godotenv.Load()
 	if err != nil {
@@ -43,7 +45,7 @@ func Init() error {
 		fmt.Printf("DEBUG: redistore.NewRediStore(%d, %q, %q, %q, %q)\n", size, network, address, password, keyPairs)
 		store, err := redistore.NewRediStore(size, network, address, password, keyPairs)
 		if err != nil {
-			fmt.Printf("DEBUG: failed redistore.NewRediStore: %w\n", err)
+			fmt.Printf("DEBUG: failed redistore.NewRediStore: %v\n", err)
 			panic(err)
 		}
 		fmt.Printf("SESSION: redistore CONNECTED\n")

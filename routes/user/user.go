@@ -7,7 +7,8 @@ import (
 	"github.com/scrollodex/adminportal/routes/templates"
 )
 
-func UserHandler(w http.ResponseWriter, r *http.Request) {
+// Handler renders the page.
+func Handler(w http.ResponseWriter, r *http.Request) {
 
 	session, err := app.Store.Get(r, "auth-session")
 	if err != nil {

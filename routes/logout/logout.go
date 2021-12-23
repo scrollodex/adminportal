@@ -6,18 +6,19 @@ import (
 	"os"
 )
 
-func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+// Handler renders the page.
+func Handler(w http.ResponseWriter, r *http.Request) {
 
 	domain := os.Getenv("AUTH0_DOMAIN")
 
-	logoutUrl, err := url.Parse("https://" + domain)
+	logoutURL, err := url.Parse("https://" + domain)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	logoutUrl.Path += "/v2/logout"
+	logoutURL.Path += "/v2/logout"
 	parameters := url.Values{}
 
 	var scheme string
@@ -40,7 +41,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	parameters.Add("client_id", os.Getenv("AUTH0_CLIENT_ID"))
-	logoutUrl.RawQuery = parameters.Encode()
+	logoutURL.RawQuery = parameters.Encode()
 
-	http.Redirect(w, r, logoutUrl.String(), http.StatusTemporaryRedirect)
+	http.Redirect(w, r, logoutURL.String(), http.StatusTemporaryRedirect)
 }

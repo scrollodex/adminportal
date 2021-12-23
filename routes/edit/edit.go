@@ -18,7 +18,8 @@ import (
 //	Value int    `json:"value"`
 //}
 
-func EditHandler(w http.ResponseWriter, r *http.Request) {
+// Handler renders the page.
+func Handler(w http.ResponseWriter, r *http.Request) {
 
 	session, err := app.Store.Get(r, "auth-session")
 	if err != nil {

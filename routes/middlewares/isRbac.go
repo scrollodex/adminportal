@@ -7,6 +7,7 @@ import (
 	"github.com/scrollodex/adminportal/rbac"
 )
 
+// IsRbacEditor is middleware that requires "Editor" entitlement.
 func IsRbacEditor(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 
 	session, err := app.Store.Get(r, "auth-session")

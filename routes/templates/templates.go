@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 )
 
+// RenderTemplate renders the template tmpl using data.
 func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	cwd := os.Getenv("ADMINPORTAL_TEMPLATE_BASEDIR")
 	if cwd == "" {

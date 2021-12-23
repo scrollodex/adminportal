@@ -11,7 +11,8 @@ import (
 	"github.com/scrollodex/adminportal/dex/reslist"
 )
 
-func ZingDataHandler(w http.ResponseWriter, r *http.Request) {
+// Handler is middleware that outputs the Zing info for the current table.
+func Handler(w http.ResponseWriter, r *http.Request) {
 
 	session, err := app.Store.Get(r, "auth-session")
 	if err != nil {

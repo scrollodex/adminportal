@@ -10,9 +10,9 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/scrollodex/adminportal/app"
-	"github.com/scrollodex/adminportal/routes/templates"
 	"github.com/scrollodex/adminportal/dex/dextidy"
 	"github.com/scrollodex/adminportal/dex/reslist"
+	"github.com/scrollodex/adminportal/routes/templates"
 )
 
 /*
@@ -24,7 +24,8 @@ This page has many states:
 
 */
 
-func EditrowHandler(w http.ResponseWriter, r *http.Request) {
+// Handler renders the page.
+func Handler(w http.ResponseWriter, r *http.Request) {
 
 	session, err := app.Store.Get(r, "auth-session")
 	if err != nil {

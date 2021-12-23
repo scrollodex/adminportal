@@ -20,7 +20,7 @@ type GITHandle struct {
 
 // Initialization
 
-// NewGIT creates a new GIT object.
+// NewGit creates a new GIT object.
 func NewGit(url string) (Databaser, error) {
 	db := &GITHandle{
 		url: url,
@@ -45,7 +45,7 @@ func NewGit(url string) (Databaser, error) {
 	return db, nil
 }
 
-func (rh GITHandle) init() error {
+func (rh *GITHandle) init() error {
 	url := rh.url
 	dir := rh.dir
 	basedir := filepath.Join(os.Getenv("ADMINPORTAL_BASEDIR"))

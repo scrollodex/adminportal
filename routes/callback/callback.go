@@ -12,7 +12,8 @@ import (
 	"github.com/coreos/go-oidc"
 )
 
-func CallbackHandler(w http.ResponseWriter, r *http.Request) {
+// Handler render the page.
+func Handler(w http.ResponseWriter, r *http.Request) {
 	session, err := app.Store.Get(r, "auth-session")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
