@@ -42,11 +42,13 @@
   
   <form method="post">
 
+    <div class="rendered-form">
+    <div class="formbuilder-button form-group field-button-editrow-save">
+        <button type="submit" class="btn-success btn" name="button-editrow-save" access="false" style="success" id="button-editrow-save">Save</button>
+    </div>
+
       {{if eq .table "categories" -}}
 <div class="rendered-form">
-    <div class="formbuilder-button form-group field-button-editrow-save">
-        <button type="button" class="btn-success btn" name="button-editrow-save" access="false" style="success" id="button-editrow-save">Save</button>
-    </div>
     <div class="">
         <h1 access="false" id="control-3507097">Category #{{.item.ID}}</h1></div>
     <div class="formbuilder-text form-group field-text-1632675383103">
@@ -68,10 +70,6 @@
 </div>
 
       {{- else if eq .table "locations" -}}
-<div class="rendered-form">
-    <div class="formbuilder-button form-group field-button-editrow-save">
-        <button type="submit" class="btn-success btn" name="button-editrow-save" access="false" style="success" id="button-editrow-save">Save</button>
-    </div>
     <div class="">
         <h1 access="false" id="control-7365131">Location #{{.item.ID}}</h1></div>
     <div class="formbuilder-text form-group field-text-1632673613322">
@@ -95,9 +93,6 @@
 
       {{- else if eq .table "entries" -}}
 <div class="rendered-form">
-    <div class="formbuilder-button form-group field-button-editrow-save">
-        <button type="button" class="btn-success btn" name="button-editrow-save" access="false" style="success" id="button-editrow-save">Save</button>
-    </div>
     <div class="">
         <h1 access="false" id="control-2206508">Entry #{{.item.ID}} Status={{.item.Status}}</h1></div>
     <div class="formbuilder-radio-group form-group field-radio-group-1632676834180">
