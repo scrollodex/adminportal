@@ -40,12 +40,12 @@
 
   <hr>
   
-  <form>
+  <form method="post">
 
       {{if eq .table "categories" -}}
 <div class="rendered-form">
-    <div class="formbuilder-button form-group field-button-1632675364400">
-        <button type="button" class="btn-success btn" name="button-1632675364400" access="false" style="success" id="button-1632675364400">Save</button>
+    <div class="formbuilder-button form-group field-button-editrow-save">
+        <button type="button" class="btn-success btn" name="button-editrow-save" access="false" style="success" id="button-editrow-save">Save</button>
     </div>
     <div class="">
         <h1 access="false" id="control-3507097">Category #{{.item.ID}}</h1></div>
@@ -69,8 +69,8 @@
 
       {{- else if eq .table "locations" -}}
 <div class="rendered-form">
-    <div class="formbuilder-button form-group field-button-1632675155784">
-        <button type="submit" class="btn-success btn" name="button-1632675155784" access="false" style="success" id="button-1632675155784">Save</button>
+    <div class="formbuilder-button form-group field-button-editrow-save">
+        <button type="submit" class="btn-success btn" name="button-editrow-save" access="false" style="success" id="button-editrow-save">Save</button>
     </div>
     <div class="">
         <h1 access="false" id="control-7365131">Location #{{.item.ID}}</h1></div>
@@ -95,8 +95,8 @@
 
       {{- else if eq .table "entries" -}}
 <div class="rendered-form">
-    <div class="formbuilder-button form-group field-button-1632676131735">
-        <button type="button" class="btn-success btn" name="button-1632676131735" access="false" style="success" id="button-1632676131735">Save</button>
+    <div class="formbuilder-button form-group field-button-editrow-save">
+        <button type="button" class="btn-success btn" name="button-editrow-save" access="false" style="success" id="button-editrow-save">Save</button>
     </div>
     <div class="">
         <h1 access="false" id="control-2206508">Entry #{{.item.ID}} Status={{.item.Status}}</h1></div>

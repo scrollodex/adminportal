@@ -89,7 +89,43 @@ func (rh *GITHandle) init() error {
 
 func (rh GITHandle) commit() error {
 	fmt.Printf("DEBUG: COMMITTING\n")
-	return runCommand("git", "commit", "-m", "Automated commit from AdminPanel")
+	//return runCommand("git", "commit", "-m", "Automated commit from AdminPanel")
+
+	// This is the Go equiv of this shell script:
+	// git add -A
+	// if ! git diff-index --quiet HEAD; then
+	//   git commit -m "Message here"
+	//   git push origin main
+	//fi
+
+	err := runCommand("git", "config", "user.name", "Robot")
+	if err != nil {
+		return err
+	}
+	err = runCommand("git", "config", "user.email", "robot@whatexit.org")
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("DEBUG: COMMITTING: git add -A\n")
+	err = runCommand("git", "add", "-A")
+	if err != nil {
+		return err
+	}
+
+	err = runCommand("git", "diff-index", "--quiet", "HEAD")
+	if err != nil {
+		fmt.Printf("DEBUG: COMMITTING: we're clean. Committing\n")
+		err = runCommand("git", "commit", "-m", "Automated commit from AdminPanel")
+		if err != nil {
+			return err
+		}
+		err = runCommand("git", "push", "origin", "main")
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // cloneDirName reports the directory that "git clone" will create.

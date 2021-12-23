@@ -45,7 +45,7 @@ func StartServer() {
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),
 		negroni.Wrap(http.HandlerFunc(editrow.Handler)),
-	)).Methods("GET")
+	)).Methods("GET", "POST")
 	r.Handle("/admin/edit/{site:[a-z]+}/{table:[a-z]+}", negroni.New(
 		negroni.HandlerFunc(middlewares.IsAuthenticated),
 		negroni.HandlerFunc(middlewares.IsRbacEditor),

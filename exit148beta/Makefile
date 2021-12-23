@@ -12,3 +12,7 @@ run:
 
 stop:
 	-sudo /usr/local/etc/rc.d/adminportalbeta stop
+
+local:
+	( cd .. && tar -c -f - public $$(find routes -type f -name '*.html' ) ) | tar xpvf -
+	go run ../main.go ../server.go
