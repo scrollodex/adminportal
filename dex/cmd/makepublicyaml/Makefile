@@ -23,3 +23,9 @@ diff:
 	-diff /tmp/bi.yaml /tmp/bi.yaml-new
 	@echo ========== POLY
 	-diff /tmp/poly.yaml /tmp/poly.yaml-new
+
+
+
+make-beta-bi:
+	./makepublicyaml git@scrollodex-github.com:scrollodex/beta-scollodex-db-bi.git ~/gitthings/hugo-bi/data/entries.yaml
+

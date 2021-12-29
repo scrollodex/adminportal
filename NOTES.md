@@ -50,13 +50,13 @@ vi routes/unauthorized/unauthorized.go
 
 # Architecture
 
-CURRENT:
+CURRENT: (phase 1)
 
 Webserver + MySQL
 -> hourly check; generate yaml commit to hugo-bi
 -> CircleCI sees change in hugo-bi, generates website
 
-NEW:
+NEW: (phase 2)
 -> adminportal edits scrollodex-db-bi
 -> clicks "publish": generates yaml and commits to hugo-bi
 -> CircleCI sees change in hugo-bi, generates website
@@ -65,4 +65,25 @@ NEW:
 
 make reset-test-data
 
+#
 
+# Website build process:
+
+Phase 1:
+Hourly cron job on JJ reads SQL and creates all the individual files.
+
+* Runs p1extract to create the the individual files and the single YAML file:
+Individual entries: Stored in git:scrollodex-db-{bi,poly}:/{category,entry,location}
+Single yaml file: Stored in git:hugo-{bi,poly}:/data/entries.html
+
+* CI/CD pipeline sees the change in hugo-{bi,poly} and regenerates the
+  websites.
+
+Phase 2 BETA:
+
+* adminportal "edits" the files in git:scrollodex-db-{bi,poly}
+* 
+
+Phase 2:
+
+1. Disable cron job
