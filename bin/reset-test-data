@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for DB in bi poly ; do
+  ( cd ../beta-scrollodex-db-$DB && git pull )
+  for i in category entry location; do 
+    rsync -avP --exclude=.git --delete ../scrollodex-db-$DB/$i/. ../beta-scrollodex-db-$DB/$i/. 
+  done
+done
+
+echo 'TO COMMIT THESE CHANGES:'
+for DB in bi poly ; do
+  echo "     ( cd ../beta-scrollodex-db-$DB && git commit -a -m'Refresh with data from prod' ; git push)"
+done

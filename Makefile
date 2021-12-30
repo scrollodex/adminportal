@@ -15,6 +15,4 @@ exit148prod/.env-NEW:
 
 .PHONY: reset-test-data
 reset-test-data:
-	DB=poly ; for i in category entry location; do rsync --delete -avP ../scrollodex-db-$$DB/$$i/. ../beta-scrollodex-db-$$DB/$$i/. ; done
-	DB=bi ; for i in category entry location; do rsync --delete -avP ../scrollodex-db-$$DB/$$i/. ../beta-scrollodex-db-$$DB/$$i/. ; done
-
+	bin/reset-test-data
