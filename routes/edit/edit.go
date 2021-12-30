@@ -62,19 +62,19 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 		s, err := dextidy.GenCatList(dbh)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("No such table: %q", "cat"), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("failed GenCatList: %s", err), http.StatusInternalServerError)
 		}
 		data["catlist"] = s
 
 		s, err = dextidy.GenLocList(dbh)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("No such table: %q", "loc"), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("failed GenLocList: %s", err), http.StatusInternalServerError)
 		}
 		data["loclist"] = s
 
 		s, err = dextidy.GenStatusList()
 		if err != nil {
-			http.Error(w, fmt.Sprintf("status list: %q", "status"), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("failed GenStatusList: %s", err), http.StatusInternalServerError)
 		}
 		data["statuslist"] = s
 	}

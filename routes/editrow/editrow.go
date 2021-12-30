@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 
@@ -13,6 +14,7 @@ import (
 	"github.com/scrollodex/adminportal/dex/dexmodels"
 	"github.com/scrollodex/adminportal/dex/dextidy"
 	"github.com/scrollodex/adminportal/dex/reslist"
+	"github.com/scrollodex/adminportal/rbac"
 	"github.com/scrollodex/adminportal/routes/templates"
 )
 
@@ -36,13 +38,18 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	// Session (cookie) values:
 	var data = map[string]interface{}{}
+
+	// Defaults:
 	data["nickname"] = "friend"
+	emailAddr := "n/a"
+
 	if profile, ok := session.Values["profile"]; ok {
 		mp, ok := profile.(map[string]interface{})
 		if !ok {
 			panic("An entire interface changed type. I just can't.")
 		}
 		data["nickname"] = mp["nickname"].(string)
+		emailAddr = rbac.EmailOf(mp["iss"].(string), mp["sub"].(string))
 	}
 
 	fmt.Printf("DEBUG: =================================== NEW REQUEST\n")
@@ -125,6 +132,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			}
 
 		case "entries":
+
 			categoryID, _ := strconv.Atoi(r.Form["select-1632676732741"][0])
 			locationID, _ := strconv.Atoi(r.Form["select-1632676809195"][0])
 			err = dbh.EntryStore(dexmodels.Entry{
@@ -147,15 +155,18 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 					Fees:        r.Form["text-1632676682890"][0],
 					Description: r.Form["textarea-1632676686169"][0],
 				},
-
-				//
-				CategoryID: categoryID,
-				LocationID: locationID,
-				//Status:              r.Form["text-1632673613322"][0], // int    `yaml:"status"` // 0=Inactive, 1=Active
-				//LastEditDate:        r.Form["text-1632673613322"][0], // string `yaml:"lastUpdate" json:"last_update"`
-				//PrivateLastEditBy:   r.Form["text-1632673613322"][0], // string `yaml:"private_last_edit_by" json:"private_last_edit_by"`
+				// Form data
 				PrivateAdminNotes:   r.Form["textarea-1632677017043"][0],
 				PrivateContactEmail: r.Form["text-1632677014693"][0],
+
+				// Indexes:
+				CategoryID: categoryID,
+				LocationID: locationID,
+
+				// Calculated
+				//LastEditDate:      time.Now().Format(time.RFC3339),
+				LastEditDate:      time.Now().UTC().Format("2006-01-02 15:04 UTC"),
+				PrivateLastEditBy: emailAddr,
 			})
 			if err != nil {
 				http.Error(w, fmt.Sprintf("Store failed: %q", err), http.StatusInternalServerError)
@@ -188,6 +199,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	case "entries":
 		d, err := dbh.EntryGet(id)
+		if d.PrivateLastEditBy == "" {
+			d.PrivateLastEditBy = "unknown"
+		}
+		if d.LastEditDate == "" {
+			d.LastEditDate = "unknown"
+		}
 		fmt.Fprintf(os.Stderr, "DEBUG: err=%v d=%+v\n", err, d)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("EntryGet(%d) failed: %s", id, err), http.StatusInternalServerError)

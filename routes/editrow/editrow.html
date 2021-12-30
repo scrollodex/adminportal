@@ -94,7 +94,7 @@
       {{- else if eq .table "entries" -}}
 <div class="rendered-form">
     <div class="">
-        <h1 access="false" id="control-2206508">Entry #{{.item.ID}} Status={{.item.Status}}</h1></div>
+        <h1 access="false" id="control-2206508">Entry #{{.item.ID}}</h1></div>
     <div class="formbuilder-radio-group form-group field-radio-group-1632676834180">
         <label for="radio-group-1632676834180" class="formbuilder-radio-group-label">Status<span class="formbuilder-required">*</span></label>
         <div class="radio-group">
@@ -212,12 +212,10 @@ checked="checked"
         <label for="textarea-1632677017043" class="formbuilder-textarea-label">Administrative Notes (not for publication)</label>
         <textarea type="textarea" rows=6 cols=80 class="form-control" name="textarea-1632677017043" access="false" id="textarea-1632677017043">{{.item.PrivateAdminNotes}}</textarea>
     </div>
-    <div class="">
-        <h6 access="false" id="control-6448994">Last Edited by: {{.item.PrivateContactEmail}}</h6></div>
-    <div class="">
-        <h6 access="false" id="control-3518097">Last Update: {{.item.PrivateLastEditBy}} (published on website)</h6></div>
-</div>
 
+    <div class=""><h6 access="false" id="control-6448994">Last edited by: {{.item.PrivateLastEditBy}}</h6></div>
+    <div class=""><h6 access="false" id="control-3518097">Last Update: {{.item.LastEditDate}}</h6></div>
+</div>
 
       {{end}}
   </form>
