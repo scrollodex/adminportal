@@ -7,6 +7,15 @@ dex/cmd/makepublicyaml/makepublicyaml
 exit148prod/.env-GOOD
 exit148prod/.env-NEW
 
+dex/cmd/airtable2publicyaml/airtable2publicyaml
+dex/cmd/airtable2publicyaml/entries.yaml
+dex/cmd/many2csv/data/
+dex/cmd/many2csv/good/
+dex/cmd/many2csv/many2csv
+
+# MacOS
+.DS_Store
+
 # Binaries for programs and plugins
 *.exe
 *.exe~

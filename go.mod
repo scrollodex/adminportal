@@ -8,9 +8,11 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/sessions v1.2.1
 	github.com/joho/godotenv v1.4.0
+	github.com/mehanizm/airtable v0.2.6
 	golang.org/x/oauth2 v0.0.0-20211005180243-6b3c2da341f1
 	golang.org/x/text v0.3.3
 	gopkg.in/boj/redistore.v1 v1.0.0-20160128113310-fc113767cd6b
+	gopkg.in/yaml.v2 v2.2.2
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
