@@ -70,39 +70,49 @@ func extractEnts(a []*airtable.Record) []dexmodels.PathAndEntry {
 	return b
 }
 
+func getString(f map[string]interface{}, k string) string {
+	r := ""
+	switch f[k].(type) {
+	case string:
+		r = f[k].(string)
+	default:
+	}
+	return r
+}
+
 func tidyEnt(a *airtable.Record) (b dexmodels.EntryFields) {
 	f := a.Fields
 	//fmt.Printf("F = %+v\n", f)
 
 	b = dexmodels.EntryFields{
-		Title: f[""].(string),
+		//Title: f[""].(string),
 
 		EntryCommon: dexmodels.EntryCommon{
-			ID:          f[""].(int),
-			Salutation:  f[""].(string),
-			Firstname:   f[""].(string),
-			Lastname:    f[""].(string),
-			Credentials: f[""].(string),
-			JobTitle:    f[""].(string),
-			Company:     f[""].(string),
-			ShortDesc:   f[""].(string),
-			Phone:       f[""].(string),
-			Fax:         f[""].(string),
-			Address:     f[""].(string),
-			Email:       f[""].(string),
-			Email2:      f[""].(string),
-			Website:     f[""].(string),
-			Website2:    f[""].(string),
-			Fees:        f[""].(string),
-			Description: f[""].(string),
+			ID:          int(f["EntryID"].(float64)),
+			Salutation:  getString(f, "salutation"),
+			Firstname:   getString(f, "first_name"),
+			Lastname:    getString(f, "last_name"),
+			Credentials: getString(f, "credentials"),
+			JobTitle:    getString(f, "job_title"),
+			Company:     getString(f, "company"),
+			ShortDesc:   getString(f, "short_desc"),
+			Phone:       getString(f, "phone"),
+			Fax:         getString(f, "fax"),
+			Address:     getString(f, "address"),
+			Email:       getString(f, "email"),
+			Email2:      getString(f, "email2"),
+			Website:     getString(f, "website"),
+			Website2:    getString(f, "website2"),
+			Fees:        getString(f, "fees"),
+			Description: getString(f, "description"),
 		},
 
 		//
-		Category:        f[""].(string),
-		LocationDisplay: f[""].(string),
-		Country:         f[""].(string),
-		Region:          f[""].(string),
-		LastEditDate:    f[""].(string),
+		//Category:        f["Category"].(string),
+		//LocationDisplay: f["Location"].(string),
+		//Country:         f["Country"].(string),
+		//Region:          f["Region"].(string),
+		//LastEditDate:    f[""].(string),
 	}
 
 	return b

@@ -35,7 +35,7 @@ func MakeTitle(f dexmodels.EntryFields) string {
 
 var regexInvalidPath = regexp.MustCompile("[^A-Za-z0-9_]+")
 
-func MakePathh(f dexmodels.EntryFields) string {
+func MakePath(f dexmodels.EntryFields) string {
 
 	path := fmt.Sprintf("%d_%s-%s_%s",
 		f.ID,
