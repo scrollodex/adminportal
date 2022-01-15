@@ -1,12 +1,12 @@
 
 all: data
 
-SRC = main.go 
+SRC = main.go tidy.go
 
 clean:
 
 airtable2publicyaml:  $(SRC)
-	go build -o airtable2publicyaml main.go
+	go build -o airtable2publicyaml $(SRC)
 
 .PHONY: data
 data: airtable2publicyaml

@@ -32,16 +32,23 @@ func main() {
 	locTable := client.GetTable(os.Getenv("AIRTABLE_BASE_ID"), "Locations")
 	catTable := client.GetTable(os.Getenv("AIRTABLE_BASE_ID"), "Categories")
 	entTable := client.GetTable(os.Getenv("AIRTABLE_BASE_ID"), "Entries")
-	locations := getRecordsAll(locTable)
-	categories := getRecordsAll(catTable)
-	entries := getRecordsAll(entTable)
-	fmt.Printf("LOCATIONS %d\n", len(locations))
-	fmt.Printf("CATEGORIES %d\n", len(categories))
-	fmt.Printf("ENTRIES %d\n", len(entries))
+	locAir := getRecordsAll(locTable)
+	catAir := getRecordsAll(catTable)
+	entAir := getRecordsAll(entTable)
+	fmt.Printf("LOC-AIR %d\n", len(locAir))
+	fmt.Printf("CAT-AIR %d\n", len(catAir))
+	fmt.Printf("ENT-AIR %d\n", len(entAir))
+	fmt.Println()
 
-	var cats []dexmodels.CategoryYAML
-	var locs []dexmodels.LocationYAML
-	var ents []dexmodels.PathAndEntry
+	//var cats []dexmodels.CategoryYAML
+	cats := extractCats(catAir)
+	locs := extractLocs(locAir)
+	ents := extractEnts(entAir)
+
+	fmt.Printf("LOC-YAML %d\n", len(locs))
+	fmt.Printf("CAT-YAML %d\n", len(cats))
+	fmt.Printf("ENT-YAML %d\n", len(ents))
+	fmt.Println()
 
 	// Generate yaml
 	hugoYaml := getYaml(cats, locs, ents)
