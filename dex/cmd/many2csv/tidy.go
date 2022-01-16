@@ -93,6 +93,7 @@ func extractEntries(
 ) [][]string {
 	var result [][]string
 	result = append(result, []string{
+		"EntryID",
 		"Status",
 		"Category",
 		"Location",
@@ -116,7 +117,6 @@ func extractEntries(
 		"PRIVATE_admin_notes",
 		"PRIVATE_contact_email",
 		//
-		"x-EntryID",
 		"x-lastUpdate",
 		"x-private_last_edit_by",
 	})
@@ -146,6 +146,7 @@ func extractEntries(
 		}
 
 		row := []string{
+			fmt.Sprintf("%d", r.ID), // ID          int    `yaml:"id"`
 			// Foreign Fields
 			status,
 			catid,
@@ -169,12 +170,11 @@ func extractEntries(
 			r.Fees,        // Fees        string `yaml:"fees"`        // MarkDown
 
 			// More
-			r.LastEditDate,        // LastEditDate        string `yaml:"lastUpdate" json:"last_update"`
-			r.PrivateLastEditBy,   // PrivateLastEditBy   string `yaml:"private_last_edit_by" json:"private_last_edit_by"`
 			r.PrivateAdminNotes,   // PrivateAdminNotes   string `yaml:"private_admin_notes" json:"private_admin_notes"`
 			r.PrivateContactEmail, // PrivateContactEmail string `yaml:"private_contact_email" json:"private_contact_email"`
 			//
-			fmt.Sprintf("%d", r.ID), // ID          int    `yaml:"id"`
+			r.LastEditDate,      // LastEditDate        string `yaml:"lastUpdate" json:"last_update"`
+			r.PrivateLastEditBy, // PrivateLastEditBy   string `yaml:"private_last_edit_by" json:"private_last_edit_by"`
 
 		}
 		result = append(result, row)

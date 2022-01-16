@@ -45,7 +45,7 @@ func tidyCat(a *airtable.Record) dexmodels.CategoryYAML {
 			Name:        f["Name"].(string),
 			Description: f["Description"].(string),
 			Priority:    int(f["x-Priority"].(float64)),
-			Icon:        f["IconFilename"].(string),
+			Icon:        getString(f, "IconFilename"),
 		},
 	}
 	return b
