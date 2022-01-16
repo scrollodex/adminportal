@@ -37,6 +37,7 @@ func tidyCat(a *dexmodels.Category) (b dexmodels.CategoryYAML) {
 	b.Name = a.Name
 	b.Description = a.Description
 	b.Priority = a.Priority
+	b.Icon = a.Icon
 	return b
 }
 
