@@ -112,6 +112,7 @@ func getString(f map[string]interface{}, k string) string {
 
 func tidyEnt(a *airtable.Record) (b dexmodels.EntryFields) {
 	f := a.Fields
+
 	fmt.Printf("F = %+v\n", f)
 
 	b = dexmodels.EntryFields{
@@ -139,20 +140,18 @@ func tidyEnt(a *airtable.Record) (b dexmodels.EntryFields) {
 		LocationDisplay: f["Location"].(string),
 		LastEditDate:    getString(f, "x-lastUpdate"),
 	}
-	cparts := strings.SplitN(b.LocationDisplay, "-", 2)
-	b.Country = cparts[0]
 
-	reg := "unknown"
-	if len(cparts) == 1 {
-		reg = ""
-	} else {
+	var cou, reg string
+	switch b.LocationDisplay {
+	case "International":
+		cou, reg = "ZZ", "International"
+	default:
+		cparts := strings.SplitN(b.LocationDisplay, "-", 2)
+		cou = cparts[0]
 		rparts := strings.SplitN(cparts[1], " ", 2)
 		reg = rparts[0]
 	}
-	//if b.Country == "AT" && reg == "All" {
-	//reg = "All"
-	//panic("")
-	//}
+	b.Country = cou
 	b.Region = reg
 
 	return b
