@@ -22,7 +22,7 @@ func MakeTitle(f dexmodels.EntryFields) string {
 	}
 
 	var title string
-	if f.Country == "ZZ" {
+	if f.Country == "ZZ" || f.Region == "" {
 		title = titlePart + fmt.Sprintf(" - %s from %s", f.Category, f.Region)
 	} else {
 		title = titlePart + fmt.Sprintf(" - %s from %s-%s", f.Category, f.Country, f.Region)

@@ -9,7 +9,7 @@ import (
 
 	"github.com/mehanizm/airtable" // https://pkg.go.dev/github.com/mehanizm/airtable#section-readme
 	"github.com/scrollodex/adminportal/dex/dexmodels"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
@@ -44,6 +44,10 @@ func main() {
 	cats := extractCats(catAir)
 	locs := extractLocs(locAir)
 	ents := extractEnts(entAir)
+
+	sortCats(&cats)
+	sortLocs(&locs)
+	sortEnts(&ents)
 
 	fmt.Printf("LOC-YAML %d\n", len(locs))
 	fmt.Printf("CAT-YAML %d\n", len(cats))

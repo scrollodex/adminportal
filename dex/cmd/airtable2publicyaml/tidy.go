@@ -1,6 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"sort"
+	"strings"
+
 	"github.com/mehanizm/airtable"
 	"github.com/scrollodex/adminportal/dex/dexmodels"
 	"github.com/scrollodex/adminportal/dex/dextidy"
@@ -27,6 +31,19 @@ func tidyLoc(a *airtable.Record) dexmodels.LocationYAML {
 	return b
 }
 
+func sortLocs(l *[]dexmodels.LocationYAML) {
+	sort.Slice((*l), func(i, j int) bool {
+		cci := strings.ToLower((*l)[i].CountryCode)
+		ccj := strings.ToLower((*l)[j].CountryCode)
+		if cci != ccj {
+			return cci < ccj
+		}
+		dni := strings.ToLower((*l)[i].Display)
+		dnj := strings.ToLower((*l)[j].Display)
+		return dni < dnj
+	})
+}
+
 func extractCats(a []*airtable.Record) []dexmodels.CategoryYAML {
 	b := make([]dexmodels.CategoryYAML, len(a))
 	for i := range a {
@@ -49,6 +66,19 @@ func tidyCat(a *airtable.Record) dexmodels.CategoryYAML {
 		},
 	}
 	return b
+}
+
+func sortCats(l *[]dexmodels.CategoryYAML) {
+	sort.Slice((*l), func(i, j int) bool {
+		pi := (*l)[i].Priority
+		pj := (*l)[j].Priority
+		if pi != pj {
+			return pi < pj
+		}
+		ci := strings.ToLower((*l)[i].Name)
+		cj := strings.ToLower((*l)[j].Name)
+		return ci < cj
+	})
 }
 
 func extractEnts(a []*airtable.Record) []dexmodels.PathAndEntry {
@@ -82,38 +112,56 @@ func getString(f map[string]interface{}, k string) string {
 
 func tidyEnt(a *airtable.Record) (b dexmodels.EntryFields) {
 	f := a.Fields
-	//fmt.Printf("F = %+v\n", f)
+	fmt.Printf("F = %+v\n", f)
 
 	b = dexmodels.EntryFields{
-		//Title: f[""].(string),
-
 		EntryCommon: dexmodels.EntryCommon{
 			ID:          int(f["EntryID"].(float64)),
-			Salutation:  getString(f, "salutation"),
-			Firstname:   getString(f, "first_name"),
-			Lastname:    getString(f, "last_name"),
-			Credentials: getString(f, "credentials"),
-			JobTitle:    getString(f, "job_title"),
-			Company:     getString(f, "company"),
-			ShortDesc:   getString(f, "short_desc"),
-			Phone:       getString(f, "phone"),
-			Fax:         getString(f, "fax"),
-			Address:     getString(f, "address"),
-			Email:       getString(f, "email"),
-			Email2:      getString(f, "email2"),
-			Website:     getString(f, "website"),
-			Website2:    getString(f, "website2"),
-			Fees:        getString(f, "fees"),
-			Description: getString(f, "description"),
+			Salutation:  getString(f, "Salutation"),
+			Firstname:   getString(f, "First"),
+			Lastname:    getString(f, "Last"),
+			Credentials: getString(f, "Suffix"),
+			JobTitle:    getString(f, "Job_Title"),
+			Company:     getString(f, "Company"),
+			ShortDesc:   getString(f, "Short Description"),
+			Phone:       getString(f, "Phone"),
+			Fax:         getString(f, "Fax"),
+			Address:     getString(f, "Address"),
+			Email:       getString(f, "Email"),
+			Email2:      getString(f, "Email2"),
+			Website:     getString(f, "Website"),
+			Website2:    getString(f, "Website2"),
+			Fees:        getString(f, "Fees"),
+			Description: getString(f, "Description"),
+			//
 		},
-
-		//
-		//Category:        f["Category"].(string),
-		//LocationDisplay: f["Location"].(string),
-		//Country:         f["Country"].(string),
-		//Region:          f["Region"].(string),
-		//LastEditDate:    f[""].(string),
+		Category:        f["Category"].(string),
+		LocationDisplay: f["Location"].(string),
+		LastEditDate:    getString(f, "x-lastUpdate"),
 	}
+	cparts := strings.SplitN(b.LocationDisplay, "-", 2)
+	b.Country = cparts[0]
+
+	reg := "unknown"
+	if len(cparts) == 1 {
+		reg = ""
+	} else {
+		rparts := strings.SplitN(cparts[1], " ", 2)
+		reg = rparts[0]
+	}
+	//if b.Country == "AT" && reg == "All" {
+	//reg = "All"
+	//panic("")
+	//}
+	b.Region = reg
 
 	return b
+}
+
+func sortEnts(l *[]dexmodels.PathAndEntry) {
+	sort.Slice((*l), func(i, j int) bool {
+		pi := (*l)[i].Fields.ID
+		pj := (*l)[j].Fields.ID
+		return pi < pj
+	})
 }
