@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+set -x
+
+( cd dex/cmd/makepublicyaml && go build -o makepublicyaml . )
+
+MAKEPUBLICYAML=$(pwd)/dex/cmd/makepublicyaml/makepublicyaml
+
+for DB in bi poly ; do
+  ( cd ../beta-scrollodex-db-$DB && git checkout ; git pull || true )
+  ( cd ../hugo-$DB && git checkout ; git pull || true )
+
+  # In beta, generate the big file.
+  export ADMINPORTAL_BASEDIR=/tmp
+  "$MAKEPUBLICYAML" "git@scrollodex-github.com:scrollodex/beta-scrollodex-db-${DB}.git" /tmp/$DB-entries.yaml
+
+  #diff -cw ../hugo-$DB/data/entries.yaml /tmp/$DB-entries.yaml | head -160
+
+  # Copy big file to hugo-bi's entries.yaml
+  cp /tmp/$DB-entries.yaml ../hugo-$DB/data/entries.yaml
+
+  # generate website
+  ( cd ../hugo-$DB && node hugo.js -f 
+
+  if [[ $DB == "bi" ]]; then
+    echo ========== BI
+    rsync -avP --exclude .well-known --delete public/. /usr/local/www/www.beta.bizone.org/html/.
+  else
+    echo ========== POLY
+    rsync -avP --exclude .well-known --delete public/.  /usr/local/www/www.beta.polyfriendly.org/html/.
+  fi
+
+  )
+
+done
+
